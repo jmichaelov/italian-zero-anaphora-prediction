@@ -1,0 +1,836 @@
+---
+title: "Replicating Carminati (2005)"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+# Setup
+
+Load correct functions
+
+```{r setup, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(ggsignif)
+library(cowplot)
+
+
+# extended colorblind palette from https://jacksonlab.agronomy.wisc.edu/2016/05/23/15-level-colorblind-friendly-palette/
+pal= c("#000000","#004949","#009292","#ff6db6","#ffb6db", "#490092","#006ddb","#b66dff","#6db6ff","#b6dbff", "#920000","#924900","#db6d00","#24ff24","#ffff6d")
+
+
+set.seed(20200115)
+```
+
+
+
+# Read in data
+
+```{r}
+all_exps = read_csv("../stimuli/carminati_2005.csv")%>%
+  mutate(Experiment = as_factor(Experiment),
+         SentenceFrame = as_factor(SentenceFrame),
+         Condition = as_factor(Condition))%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.bert-base-multilingual-cased.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("mbert_base" = "Surprisal")%>%
+               mutate(FullSentence = str_replace(FullSentence,"po'i","po' i"))),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.dbmdz-bert-base-italian-cased.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("bert_italian_base" = "Surprisal")%>%
+               mutate(FullSentence = str_replace(FullSentence,"po'i","po' i"))),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.dbmdz-bert-base-italian-xxl-cased.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("bert_italian_xxl" = "Surprisal")%>%
+               mutate(FullSentence = str_replace(FullSentence,"po'i","po' i"))),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.GroNLP-gpt2-small-italian.causal.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("gpt2_italian_small" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.LorenzoDeMattei-GePpeTto.causal.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("geppetto" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.Musixmatch-umberto-commoncrawl-cased-v1.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("umberto_cased" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.xlm-mlm-100-1280.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xlm_mlm_100" = "Surprisal")%>%
+               mutate(FullSentence = str_replace(FullSentence,"po'i","po' i"))%>%
+               mutate(FullSentence = str_replace(FullSentence," '","'"))),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.xlm-roberta-base.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xlm_roberta_base" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.xlm-roberta-large.masked.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xlm_roberta_large" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+    left_join((read_delim("../output/carminati_2005.surprisal.facebook-xglm-2.9B.causal.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xglm_2900" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.facebook-xglm-4.5B.causal.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xglm_4500" = "Surprisal")),by="FullSentence")%>%distinct()%>%
+  left_join((read_delim("../output/carminati_2005.surprisal.facebook-xglm-7.5B.causal.output")%>%
+               select(FullSentence,Surprisal)%>%
+               rename("xglm_7500" = "Surprisal")),by="FullSentence")%>%distinct()
+  
+```
+
+
+# Statistical Analyses
+
+```{r}
+# Exp 1 LRTs
+
+exp1_data  = all_exps%>%
+  filter(Experiment=="1")
+
+exp1.geppetto.null = lmer(data = exp1_data, formula = geppetto ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.geppetto.cond = lmer(data = exp1_data, formula = geppetto ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.geppetto.anova = anova(exp1.geppetto.null,exp1.geppetto.cond)
+
+exp1.gpt2_italian_small.null = lmer(data = exp1_data, formula = gpt2_italian_small ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.gpt2_italian_small.cond = lmer(data = exp1_data, formula = gpt2_italian_small ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.gpt2_italian_small.anova = anova(exp1.gpt2_italian_small.null,exp1.gpt2_italian_small.cond)
+
+exp1.umberto_cased.null = lmer(data = exp1_data, formula = umberto_cased ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.umberto_cased.cond = lmer(data = exp1_data, formula = umberto_cased ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.umberto_cased.anova = anova(exp1.umberto_cased.null,exp1.umberto_cased.cond)
+
+exp1.bert_italian_base.null = lmer(data = exp1_data, formula = bert_italian_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.bert_italian_base.cond = lmer(data = exp1_data, formula = bert_italian_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.bert_italian_base.anova = anova(exp1.bert_italian_base.null,exp1.bert_italian_base.cond)
+
+exp1.bert_italian_xxl.null = lmer(data = exp1_data, formula = bert_italian_xxl ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.bert_italian_xxl.cond = lmer(data = exp1_data, formula = bert_italian_xxl ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.bert_italian_xxl.anova = anova(exp1.bert_italian_xxl.null,exp1.bert_italian_xxl.cond)
+
+exp1.mbert_base.null = lmer(data = exp1_data, formula = mbert_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.mbert_base.cond = lmer(data = exp1_data, formula = mbert_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.mbert_base.anova = anova(exp1.mbert_base.null,exp1.mbert_base.cond)
+
+exp1.xlm_mlm_100.null = lmer(data = exp1_data, formula = xlm_mlm_100 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_mlm_100.cond = lmer(data = exp1_data, formula = xlm_mlm_100 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_mlm_100.anova = anova(exp1.xlm_mlm_100.null,exp1.xlm_mlm_100.cond)
+
+exp1.xlm_roberta_base.null = lmer(data = exp1_data, formula = xlm_roberta_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_roberta_base.cond = lmer(data = exp1_data, formula = xlm_roberta_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_roberta_base.anova = anova(exp1.xlm_roberta_base.null,exp1.xlm_roberta_base.cond)
+
+exp1.xlm_roberta_large.null = lmer(data = exp1_data, formula = xlm_roberta_large ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_roberta_large.cond = lmer(data = exp1_data, formula = xlm_roberta_large ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xlm_roberta_large.anova = anova(exp1.xlm_roberta_large.null,exp1.xlm_roberta_large.cond)
+
+exp1.xglm_2900.null = lmer(data = exp1_data, formula = xglm_2900 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_2900.cond = lmer(data = exp1_data, formula = xglm_2900 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_2900.anova = anova(exp1.xglm_2900.null,exp1.xglm_2900.cond)
+
+exp1.xglm_4500.null = lmer(data = exp1_data, formula = xglm_4500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_4500.cond = lmer(data = exp1_data, formula = xglm_4500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_4500.anova = anova(exp1.xglm_4500.null,exp1.xglm_4500.cond)
+
+exp1.xglm_7500.null = lmer(data = exp1_data, formula = xglm_7500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_7500.cond = lmer(data = exp1_data, formula = xglm_7500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp1.xglm_7500.anova = anova(exp1.xglm_7500.null,exp1.xglm_7500.cond)
+
+
+exp1_tests = tribble(
+  ~Experiment,~StatisticalTest,~Model,~StatisticName,~TestStatistic,~df,~p,
+  "Experiment 1","LRT","GePpeTto","Chisq",exp1.geppetto.anova$Chisq[2],exp1.geppetto.anova$Df[2],exp1.geppetto.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","GPT-2 Italian","Chisq",exp1.gpt2_italian_small.anova$Chisq[2],exp1.gpt2_italian_small.anova$Df[2],exp1.gpt2_italian_small.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","UmBERTo","Chisq",exp1.umberto_cased.anova$Chisq[2],exp1.umberto_cased.anova$Df[2],exp1.umberto_cased.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","It BERT Base","Chisq",exp1.bert_italian_base.anova$Chisq[2],exp1.bert_italian_base.anova$Df[2],exp1.bert_italian_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","It BERT XXL","Chisq",exp1.bert_italian_xxl.anova$Chisq[2],exp1.bert_italian_xxl.anova$Df[2],exp1.bert_italian_xxl.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","mBERT","Chisq",exp1.mbert_base.anova$Chisq[2],exp1.mbert_base.anova$Df[2],exp1.mbert_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XLM-100","Chisq",exp1.xlm_mlm_100.anova$Chisq[2],exp1.xlm_mlm_100.anova$Df[2],exp1.xlm_mlm_100.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XLM-R Base","Chisq",exp1.xlm_roberta_base.anova$Chisq[2],exp1.xlm_roberta_base.anova$Df[2],exp1.xlm_roberta_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XLM-R Large","Chisq",exp1.xlm_roberta_large.anova$Chisq[2],exp1.xlm_roberta_large.anova$Df[2],exp1.xlm_roberta_large.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XGLM 2.9B","Chisq",exp1.xglm_2900.anova$Chisq[2],exp1.xglm_2900.anova$Df[2],exp1.xglm_2900.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XGLM 4.5B","Chisq",exp1.xglm_4500.anova$Chisq[2],exp1.xglm_4500.anova$Df[2],exp1.xglm_4500.anova$`Pr(>Chisq)`[2],
+  "Experiment 1","LRT","XGLM 7.5B","Chisq",exp1.xglm_7500.anova$Chisq[2],exp1.xglm_7500.anova$Df[2],exp1.xglm_7500.anova$`Pr(>Chisq)`[2]
+                     )
+
+# Exp 2 LRTs
+
+exp2ab_data  = all_exps%>%
+  filter((Experiment=="2")&(Condition=="2a"|Condition=="2b"))
+
+exp2ab.geppetto.null = lmer(data = exp2ab_data, formula = geppetto ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.geppetto.cond = lmer(data = exp2ab_data, formula = geppetto ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.geppetto.anova = anova(exp2ab.geppetto.null,exp2ab.geppetto.cond)
+
+exp2ab.gpt2_italian_small.null = lmer(data = exp2ab_data, formula = gpt2_italian_small ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.gpt2_italian_small.cond = lmer(data = exp2ab_data, formula = gpt2_italian_small ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.gpt2_italian_small.anova = anova(exp2ab.gpt2_italian_small.null,exp2ab.gpt2_italian_small.cond)
+
+exp2ab.umberto_cased.null = lmer(data = exp2ab_data, formula = umberto_cased ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.umberto_cased.cond = lmer(data = exp2ab_data, formula = umberto_cased ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.umberto_cased.anova = anova(exp2ab.umberto_cased.null,exp2ab.umberto_cased.cond)
+
+exp2ab.bert_italian_base.null = lmer(data = exp2ab_data, formula = bert_italian_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.bert_italian_base.cond = lmer(data = exp2ab_data, formula = bert_italian_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.bert_italian_base.anova = anova(exp2ab.bert_italian_base.null,exp2ab.bert_italian_base.cond)
+
+exp2ab.bert_italian_xxl.null = lmer(data = exp2ab_data, formula = bert_italian_xxl ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.bert_italian_xxl.cond = lmer(data = exp2ab_data, formula = bert_italian_xxl ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.bert_italian_xxl.anova = anova(exp2ab.bert_italian_xxl.null,exp2ab.bert_italian_xxl.cond)
+
+exp2ab.mbert_base.null = lmer(data = exp2ab_data, formula = mbert_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.mbert_base.cond = lmer(data = exp2ab_data, formula = mbert_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.mbert_base.anova = anova(exp2ab.mbert_base.null,exp2ab.mbert_base.cond)
+
+exp2ab.xlm_mlm_100.null = lmer(data = exp2ab_data, formula = xlm_mlm_100 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_mlm_100.cond = lmer(data = exp2ab_data, formula = xlm_mlm_100 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_mlm_100.anova = anova(exp2ab.xlm_mlm_100.null,exp2ab.xlm_mlm_100.cond)
+
+exp2ab.xlm_roberta_base.null = lmer(data = exp2ab_data, formula = xlm_roberta_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_roberta_base.cond = lmer(data = exp2ab_data, formula = xlm_roberta_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_roberta_base.anova = anova(exp2ab.xlm_roberta_base.null,exp2ab.xlm_roberta_base.cond)
+
+exp2ab.xlm_roberta_large.null = lmer(data = exp2ab_data, formula = xlm_roberta_large ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_roberta_large.cond = lmer(data = exp2ab_data, formula = xlm_roberta_large ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xlm_roberta_large.anova = anova(exp2ab.xlm_roberta_large.null,exp2ab.xlm_roberta_large.cond)
+
+
+exp2ab.xglm_2900.null = lmer(data = exp2ab_data, formula = xglm_2900 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_2900.cond = lmer(data = exp2ab_data, formula = xglm_2900 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_2900.anova = anova(exp2ab.xglm_2900.null,exp2ab.xglm_2900.cond)
+
+exp2ab.xglm_4500.null = lmer(data = exp2ab_data, formula = xglm_4500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_4500.cond = lmer(data = exp2ab_data, formula = xglm_4500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_4500.anova = anova(exp2ab.xglm_4500.null,exp2ab.xglm_4500.cond)
+
+exp2ab.xglm_7500.null = lmer(data = exp2ab_data, formula = xglm_7500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_7500.cond = lmer(data = exp2ab_data, formula = xglm_7500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2ab.xglm_7500.anova = anova(exp2ab.xglm_7500.null,exp2ab.xglm_7500.cond)
+
+
+
+exp2ab_tests = tribble(
+  ~Experiment,~StatisticalTest,~Model,~StatisticName,~TestStatistic,~df,~p,
+  "Experiment 2ab","LRT","GePpeTto","Chisq",exp2ab.geppetto.anova$Chisq[2],exp2ab.geppetto.anova$Df[2],exp2ab.geppetto.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","GPT-2 Italian","Chisq",exp2ab.gpt2_italian_small.anova$Chisq[2],exp2ab.gpt2_italian_small.anova$Df[2],exp2ab.gpt2_italian_small.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","UmBERTo","Chisq",exp2ab.umberto_cased.anova$Chisq[2],exp2ab.umberto_cased.anova$Df[2],exp2ab.umberto_cased.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","It BERT Base","Chisq",exp2ab.bert_italian_base.anova$Chisq[2],exp2ab.bert_italian_base.anova$Df[2],exp2ab.bert_italian_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","It BERT XXL","Chisq",exp2ab.bert_italian_xxl.anova$Chisq[2],exp2ab.bert_italian_xxl.anova$Df[2],exp2ab.bert_italian_xxl.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","mBERT","Chisq",exp2ab.mbert_base.anova$Chisq[2],exp2ab.mbert_base.anova$Df[2],exp2ab.mbert_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XLM-100","Chisq",exp2ab.xlm_mlm_100.anova$Chisq[2],exp2ab.xlm_mlm_100.anova$Df[2],exp2ab.xlm_mlm_100.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XLM-R Base","Chisq",exp2ab.xlm_roberta_base.anova$Chisq[2],exp2ab.xlm_roberta_base.anova$Df[2],exp2ab.xlm_roberta_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XLM-R Large","Chisq",exp2ab.xlm_roberta_large.anova$Chisq[2],exp2ab.xlm_roberta_large.anova$Df[2],exp2ab.xlm_roberta_large.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XGLM 2.9B","Chisq",exp2ab.xglm_2900.anova$Chisq[2],exp2ab.xglm_2900.anova$Df[2],exp2ab.xglm_2900.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XGLM 4.5B","Chisq",exp2ab.xglm_4500.anova$Chisq[2],exp2ab.xglm_4500.anova$Df[2],exp2ab.xglm_4500.anova$`Pr(>Chisq)`[2],
+  "Experiment 2ab","LRT","XGLM 7.5B","Chisq",exp2ab.xglm_7500.anova$Chisq[2],exp2ab.xglm_7500.anova$Df[2],exp2ab.xglm_7500.anova$`Pr(>Chisq)`[2]
+)
+
+exp2bc_data  = all_exps%>%
+  filter((Experiment=="2")&(Condition=="2b"|Condition=="2c"))
+
+exp2bc.geppetto.null = lmer(data = exp2bc_data, formula = geppetto ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.geppetto.cond = lmer(data = exp2bc_data, formula = geppetto ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.geppetto.anova = anova(exp2bc.geppetto.null,exp2bc.geppetto.cond)
+
+exp2bc.gpt2_italian_small.null = lmer(data = exp2bc_data, formula = gpt2_italian_small ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.gpt2_italian_small.cond = lmer(data = exp2bc_data, formula = gpt2_italian_small ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.gpt2_italian_small.anova = anova(exp2bc.gpt2_italian_small.null,exp2bc.gpt2_italian_small.cond)
+
+exp2bc.umberto_cased.null = lmer(data = exp2bc_data, formula = umberto_cased ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.umberto_cased.cond = lmer(data = exp2bc_data, formula = umberto_cased ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.umberto_cased.anova = anova(exp2bc.umberto_cased.null,exp2bc.umberto_cased.cond)
+
+exp2bc.bert_italian_base.null = lmer(data = exp2bc_data, formula = bert_italian_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.bert_italian_base.cond = lmer(data = exp2bc_data, formula = bert_italian_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.bert_italian_base.anova = anova(exp2bc.bert_italian_base.null,exp2bc.bert_italian_base.cond)
+
+exp2bc.bert_italian_xxl.null = lmer(data = exp2bc_data, formula = bert_italian_xxl ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.bert_italian_xxl.cond = lmer(data = exp2bc_data, formula = bert_italian_xxl ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.bert_italian_xxl.anova = anova(exp2bc.bert_italian_xxl.null,exp2bc.bert_italian_xxl.cond)
+
+exp2bc.mbert_base.null = lmer(data = exp2bc_data, formula = mbert_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.mbert_base.cond = lmer(data = exp2bc_data, formula = mbert_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.mbert_base.anova = anova(exp2bc.mbert_base.null,exp2bc.mbert_base.cond)
+
+exp2bc.xlm_mlm_100.null = lmer(data = exp2bc_data, formula = xlm_mlm_100 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_mlm_100.cond = lmer(data = exp2bc_data, formula = xlm_mlm_100 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_mlm_100.anova = anova(exp2bc.xlm_mlm_100.null,exp2bc.xlm_mlm_100.cond)
+
+exp2bc.xlm_roberta_base.null = lmer(data = exp2bc_data, formula = xlm_roberta_base ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_roberta_base.cond = lmer(data = exp2bc_data, formula = xlm_roberta_base ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_roberta_base.anova = anova(exp2bc.xlm_roberta_base.null,exp2bc.xlm_roberta_base.cond)
+
+exp2bc.xlm_roberta_large.null = lmer(data = exp2bc_data, formula = xlm_roberta_large ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_roberta_large.cond = lmer(data = exp2bc_data, formula = xlm_roberta_large ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xlm_roberta_large.anova = anova(exp2bc.xlm_roberta_large.null,exp2bc.xlm_roberta_large.cond)
+
+
+exp2bc.xglm_2900.null = lmer(data = exp2bc_data, formula = xglm_2900 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_2900.cond = lmer(data = exp2bc_data, formula = xglm_2900 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_2900.anova = anova(exp2bc.xglm_2900.null,exp2bc.xglm_2900.cond)
+
+exp2bc.xglm_4500.null = lmer(data = exp2bc_data, formula = xglm_4500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_4500.cond = lmer(data = exp2bc_data, formula = xglm_4500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_4500.anova = anova(exp2bc.xglm_4500.null,exp2bc.xglm_4500.cond)
+
+exp2bc.xglm_7500.null = lmer(data = exp2bc_data, formula = xglm_7500 ~ (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_7500.cond = lmer(data = exp2bc_data, formula = xglm_7500 ~ Condition + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp2bc.xglm_7500.anova = anova(exp2bc.xglm_7500.null,exp2bc.xglm_7500.cond)
+
+
+exp2bc_tests = tribble(
+  ~Experiment,~StatisticalTest,~Model,~StatisticName,~TestStatistic,~df,~p,
+  "Experiment 2bc","LRT","GePpeTto","Chisq",exp2bc.geppetto.anova$Chisq[2],exp2bc.geppetto.anova$Df[2],exp2bc.geppetto.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","GPT-2 Italian","Chisq",exp2bc.gpt2_italian_small.anova$Chisq[2],exp2bc.gpt2_italian_small.anova$Df[2],exp2bc.gpt2_italian_small.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","UmBERTo","Chisq",exp2bc.umberto_cased.anova$Chisq[2],exp2bc.umberto_cased.anova$Df[2],exp2bc.umberto_cased.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","It BERT Base","Chisq",exp2bc.bert_italian_base.anova$Chisq[2],exp2bc.bert_italian_base.anova$Df[2],exp2bc.bert_italian_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","It BERT XXL","Chisq",exp2bc.bert_italian_xxl.anova$Chisq[2],exp2bc.bert_italian_xxl.anova$Df[2],exp2bc.bert_italian_xxl.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","mBERT","Chisq",exp2bc.mbert_base.anova$Chisq[2],exp2bc.mbert_base.anova$Df[2],exp2bc.mbert_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XLM-100","Chisq",exp2bc.xlm_mlm_100.anova$Chisq[2],exp2bc.xlm_mlm_100.anova$Df[2],exp2bc.xlm_mlm_100.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XLM-R Base","Chisq",exp2bc.xlm_roberta_base.anova$Chisq[2],exp2bc.xlm_roberta_base.anova$Df[2],exp2bc.xlm_roberta_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XLM-R Large","Chisq",exp2bc.xlm_roberta_large.anova$Chisq[2],exp2bc.xlm_roberta_large.anova$Df[2],exp2bc.xlm_roberta_large.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XGLM 2.9B","Chisq",exp2bc.xglm_2900.anova$Chisq[2],exp2bc.xglm_2900.anova$Df[2],exp2bc.xglm_2900.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XGLM 4.5B","Chisq",exp2bc.xglm_4500.anova$Chisq[2],exp2bc.xglm_4500.anova$Df[2],exp2bc.xglm_4500.anova$`Pr(>Chisq)`[2],
+  "Experiment 2bc","LRT","XGLM 7.5B","Chisq",exp2bc.xglm_7500.anova$Chisq[2],exp2bc.xglm_7500.anova$Df[2],exp2bc.xglm_7500.anova$`Pr(>Chisq)`[2]
+)
+
+
+# Exp 4 LRTs
+exp4_data  = all_exps%>%
+  filter(Experiment=="4")%>%
+  mutate(PersonType = if_else(Condition=="4a"|Condition=="4b","SAP","Third"),
+         Argument = if_else(Condition=="4a"|Condition=="4c","Subject","Object"))
+
+
+exp4.geppetto.null = lmer(data = exp4_data, formula = geppetto ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.geppetto.cond = lmer(data = exp4_data, formula = geppetto ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.geppetto.anova = anova(exp4.geppetto.null,exp4.geppetto.cond)
+
+exp4.gpt2_italian_small.null = lmer(data = exp4_data, formula = gpt2_italian_small ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.gpt2_italian_small.cond = lmer(data = exp4_data, formula = gpt2_italian_small ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.gpt2_italian_small.anova = anova(exp4.gpt2_italian_small.null,exp4.gpt2_italian_small.cond)
+
+exp4.umberto_cased.null = lmer(data = exp4_data, formula = umberto_cased ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.umberto_cased.cond = lmer(data = exp4_data, formula = umberto_cased ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.umberto_cased.anova = anova(exp4.umberto_cased.null,exp4.umberto_cased.cond)
+
+exp4.bert_italian_base.null = lmer(data = exp4_data, formula = bert_italian_base ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.bert_italian_base.cond = lmer(data = exp4_data, formula = bert_italian_base ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.bert_italian_base.anova = anova(exp4.bert_italian_base.null,exp4.bert_italian_base.cond)
+
+exp4.bert_italian_xxl.null = lmer(data = exp4_data, formula = bert_italian_xxl ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.bert_italian_xxl.cond = lmer(data = exp4_data, formula = bert_italian_xxl ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.bert_italian_xxl.anova = anova(exp4.bert_italian_xxl.null,exp4.bert_italian_xxl.cond)
+
+exp4.mbert_base.null = lmer(data = exp4_data, formula = mbert_base ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.mbert_base.cond = lmer(data = exp4_data, formula = mbert_base ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.mbert_base.anova = anova(exp4.mbert_base.null,exp4.mbert_base.cond)
+
+exp4.xlm_mlm_100.null = lmer(data = exp4_data, formula = xlm_mlm_100 ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_mlm_100.cond = lmer(data = exp4_data, formula = xlm_mlm_100 ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_mlm_100.anova = anova(exp4.xlm_mlm_100.null,exp4.xlm_mlm_100.cond)
+
+exp4.xlm_roberta_base.null = lmer(data = exp4_data, formula = xlm_roberta_base ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_roberta_base.cond = lmer(data = exp4_data, formula = xlm_roberta_base ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_roberta_base.anova = anova(exp4.xlm_roberta_base.null,exp4.xlm_roberta_base.cond)
+
+exp4.xlm_roberta_large.null = lmer(data = exp4_data, formula = xlm_roberta_large ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_roberta_large.cond = lmer(data = exp4_data, formula = xlm_roberta_large ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xlm_roberta_large.anova = anova(exp4.xlm_roberta_large.null,exp4.xlm_roberta_large.cond)
+
+
+exp4.xglm_2900.null = lmer(data = exp4_data, formula = xglm_2900 ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_2900.cond = lmer(data = exp4_data, formula = xglm_2900 ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_2900.anova = anova(exp4.xglm_2900.null,exp4.xglm_2900.cond)
+
+exp4.xglm_4500.null = lmer(data = exp4_data, formula = xglm_4500 ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_4500.cond = lmer(data = exp4_data, formula = xglm_4500 ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_4500.anova = anova(exp4.xglm_4500.null,exp4.xglm_4500.cond)
+
+exp4.xglm_7500.null = lmer(data = exp4_data, formula = xglm_7500 ~ PersonType + Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_7500.cond = lmer(data = exp4_data, formula = xglm_7500 ~ PersonType * Argument + (1|SentenceFrame),REML = FALSE, control=lmerControl(optimizer="bobyqa"))
+exp4.xglm_7500.anova = anova(exp4.xglm_7500.null,exp4.xglm_7500.cond)
+
+exp4_tests = tribble(
+  ~Experiment,~StatisticalTest,~Model,~StatisticName,~TestStatistic,~df,~p,
+  "Experiment 4","LRT","GePpeTto","Chisq",exp4.geppetto.anova$Chisq[2],exp4.geppetto.anova$Df[2],exp4.geppetto.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","GPT-2 Italian","Chisq",exp4.gpt2_italian_small.anova$Chisq[2],exp4.gpt2_italian_small.anova$Df[2],exp4.gpt2_italian_small.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","UmBERTo","Chisq",exp4.umberto_cased.anova$Chisq[2],exp4.umberto_cased.anova$Df[2],exp4.umberto_cased.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","It BERT Base","Chisq",exp4.bert_italian_base.anova$Chisq[2],exp4.bert_italian_base.anova$Df[2],exp4.bert_italian_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","It BERT XXL","Chisq",exp4.bert_italian_xxl.anova$Chisq[2],exp4.bert_italian_xxl.anova$Df[2],exp4.bert_italian_xxl.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","mBERT","Chisq",exp4.mbert_base.anova$Chisq[2],exp4.mbert_base.anova$Df[2],exp4.mbert_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XLM-100","Chisq",exp4.xlm_mlm_100.anova$Chisq[2],exp4.xlm_mlm_100.anova$Df[2],exp4.xlm_mlm_100.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XLM-R Base","Chisq",exp4.xlm_roberta_base.anova$Chisq[2],exp4.xlm_roberta_base.anova$Df[2],exp4.xlm_roberta_base.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XLM-R Large","Chisq",exp4.xlm_roberta_large.anova$Chisq[2],exp4.xlm_roberta_large.anova$Df[2],exp4.xlm_roberta_large.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XGLM 2.9B","Chisq",exp4.xglm_2900.anova$Chisq[2],exp4.xglm_2900.anova$Df[2],exp4.xglm_2900.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XGLM 4.5B","Chisq",exp4.xglm_4500.anova$Chisq[2],exp4.xglm_4500.anova$Df[2],exp4.xglm_4500.anova$`Pr(>Chisq)`[2],
+  "Experiment 4","LRT","XGLM 7.5B","Chisq",exp4.xglm_7500.anova$Chisq[2],exp4.xglm_7500.anova$Df[2],exp4.xglm_7500.anova$`Pr(>Chisq)`[2]
+)
+
+# Exp 4 Coefficients
+
+exp4_coefs = tribble(
+  ~Experiment,~StatisticalTest,~Model,~StatisticName,~TestStatistic,~df,~denDf,~p,
+  "Experiment 4","AntecedentStatusANOVA","GePpeTto","F", 
+  anova(exp4.geppetto.cond)["Argument","F value"],anova(exp4.geppetto.cond)["Argument","NumDF"],anova(exp4.geppetto.cond)["Argument","DenDF"],anova(exp4.geppetto.cond)["Argument","Pr(>F)"],
+  "Experiment 4","AntecedentStatusANOVA","GPT-2 Italian","F",
+    anova(exp4.gpt2_italian_small.cond)["Argument","F value"],anova(exp4.gpt2_italian_small.cond)["Argument","NumDF"],anova(exp4.gpt2_italian_small.cond)["Argument","DenDF"],anova(exp4.gpt2_italian_small.cond)["Argument","Pr(>F)"],
+  "Experiment 4","AntecedentStatusANOVA","UmBERTo","F",
+  anova(exp4.umberto_cased.cond)["Argument","F value"],anova(exp4.umberto_cased.cond)["Argument","NumDF"],anova(exp4.umberto_cased.cond)["Argument","DenDF"],anova(exp4.umberto_cased.cond)["Argument","Pr(>F)"],
+  "Experiment 4","AntecedentStatusANOVA","It BERT Base","F",
+  anova(exp4.bert_italian_base.cond)["Argument","F value"],anova(exp4.bert_italian_base.cond)["Argument","NumDF"],anova(exp4.bert_italian_base.cond)["Argument","DenDF"],anova(exp4.bert_italian_base.cond)["Argument","Pr(>F)"],  
+  "Experiment 4","AntecedentStatusANOVA","It BERT XXL","F",
+  anova(exp4.bert_italian_xxl.cond)["Argument","F value"],anova(exp4.bert_italian_xxl.cond)["Argument","NumDF"],anova(exp4.bert_italian_xxl.cond)["Argument","DenDF"],anova(exp4.bert_italian_xxl.cond)["Argument","Pr(>F)"],    
+  "Experiment 4","AntecedentStatusANOVA","mBERT","F",
+  anova(exp4.mbert_base.cond)["Argument","F value"],anova(exp4.mbert_base.cond)["Argument","NumDF"],anova(exp4.mbert_base.cond)["Argument","DenDF"],anova(exp4.mbert_base.cond)["Argument","Pr(>F)"],      
+  "Experiment 4","AntecedentStatusANOVA","XLM-100","F",
+  anova(exp4.xlm_mlm_100.cond)["Argument","F value"],anova(exp4.xlm_mlm_100.cond)["Argument","NumDF"],anova(exp4.xlm_mlm_100.cond)["Argument","DenDF"],anova(exp4.xlm_mlm_100.cond)["Argument","Pr(>F)"],   
+  "Experiment 4","AntecedentStatusANOVA","XLM-R Base","F",
+  anova(exp4.xlm_roberta_base.cond)["Argument","F value"],anova(exp4.xlm_roberta_base.cond)["Argument","NumDF"],anova(exp4.xlm_roberta_base.cond)["Argument","DenDF"],anova(exp4.xlm_roberta_base.cond)["Argument","Pr(>F)"],   
+  "Experiment 4","AntecedentStatusANOVA","XLM-R Large","F",
+  anova(exp4.xlm_roberta_large.cond)["Argument","F value"],anova(exp4.xlm_roberta_large.cond)["Argument","NumDF"],anova(exp4.xlm_roberta_large.cond)["Argument","DenDF"],anova(exp4.xlm_roberta_large.cond)["Argument","Pr(>F)"],   
+  "Experiment 4","AntecedentStatusANOVA","XGLM 2.9B","F",
+  anova(exp4.xglm_2900.cond)["Argument","F value"],anova(exp4.xglm_2900.cond)["Argument","NumDF"],anova(exp4.xglm_2900.cond)["Argument","DenDF"],anova(exp4.xglm_2900.cond)["Argument","Pr(>F)"],   
+  "Experiment 4","AntecedentStatusANOVA","XGLM 4.5B","F",
+  anova(exp4.xglm_4500.cond)["Argument","F value"],anova(exp4.xglm_4500.cond)["Argument","NumDF"],anova(exp4.xglm_4500.cond)["Argument","DenDF"],anova(exp4.xglm_4500.cond)["Argument","Pr(>F)"],   
+  "Experiment 4","AntecedentStatusANOVA","XGLM 7.5B","F",
+  anova(exp4.xglm_7500.cond)["Argument","F value"],anova(exp4.xglm_7500.cond)["Argument","NumDF"],anova(exp4.xglm_7500.cond)["Argument","DenDF"],anova(exp4.xglm_7500.cond)["Argument","Pr(>F)"]
+)
+
+
+
+full_test_results = exp1_tests%>%
+  add_row(exp2ab_tests)%>%
+  add_row(exp2bc_tests)%>%
+  add_row(exp4_tests)%>%
+  mutate(denDf = NA)%>%
+  add_row(exp4_coefs)
+
+full_test_results$p.corrected = p.adjust(full_test_results$p,method="BH")
+```
+
+# Tables of Results
+
+## Experiment 1
+
+### Subject vs. Object Antecedent
+
+```{r}
+exp1_subj_obj_tibble = full_test_results%>%
+  filter(Experiment=="Experiment 1")%>%
+  select(Model,TestStatistic,df,p.corrected)%>%
+  mutate(
+    p.corrected= case_when(
+      p.corrected<0.001 ~ "<0.001",
+      p.corrected>=0.001~ as.character(round(p.corrected,3))),
+   TestStatistic= case_when(
+    TestStatistic<0.1 ~ "<0.1",
+    TestStatistic>=0.1~ as.character(round(TestStatistic,1))))%>%
+  rename("Chisq"="TestStatistic",
+         "p"= "p.corrected")
+
+exp1_subj_obj_tibble%>%
+  knitr::kable(align='lrrr')
+```
+
+## Experiment 2
+
+### Subject vs. Object Antecedent
+
+```{r}
+exp2_subj_obj_tibble = full_test_results%>%
+  filter(Experiment=="Experiment 2ab")%>%
+  select(Model,TestStatistic,df,p.corrected)%>%
+  mutate(
+    p.corrected= case_when(
+      p.corrected<0.001 ~ "<0.001",
+      p.corrected>=0.001~ as.character(round(p.corrected,3))),
+   TestStatistic= case_when(
+    TestStatistic<0.1 ~ "<0.1",
+    TestStatistic>=0.1~ as.character(round(TestStatistic,1))))%>%
+  rename("Chisq"="TestStatistic",
+         "p"= "p.corrected")
+
+exp2_subj_obj_tibble%>%
+  knitr::kable(align='lrrr')
+```
+
+
+### Name vs. Pronoun Antecedent
+
+```{r}
+exp2_name_pron_tibble=full_test_results%>%
+  filter(Experiment=="Experiment 2bc")%>%
+  select(Model,TestStatistic,df,p.corrected)%>%
+  mutate(
+    p.corrected= case_when(
+      p.corrected<0.001 ~ "<0.001",
+      p.corrected>=0.001~ as.character(round(p.corrected,3))),
+   TestStatistic= case_when(
+    TestStatistic<0.1 ~ "<0.1",
+    TestStatistic>=0.1~ as.character(round(TestStatistic,1))))%>%
+  rename("Chisq"="TestStatistic",
+         "p"= "p.corrected")
+
+exp2_name_pron_tibble%>%
+  knitr::kable(align='lrrr')
+```
+
+
+
+## Experiment 4
+
+
+### Subject vs. Object Antecedent
+
+```{r}
+exp4_subj_obj_tibble=full_test_results%>%
+  filter(Experiment=="Experiment 4" & StatisticalTest=="AntecedentStatusANOVA")%>%
+  select(Model,TestStatistic,df,denDf,p.corrected)%>%
+  mutate(
+    p.corrected= case_when(
+      p.corrected<0.001 ~ "<0.001",
+      p.corrected>=0.001~ as.character(round(p.corrected,3))),
+   TestStatistic= case_when(
+    TestStatistic<0.1 ~ "<0.1",
+    TestStatistic>=0.1~ as.character(round(TestStatistic,1))))%>%
+  rename("F"="TestStatistic",
+         "df1" = "df",
+         "df2" = "denDf",
+         "p"= "p.corrected")
+exp4_subj_obj_tibble%>%
+  knitr::kable(align='lrrrr')
+
+
+```
+
+### Argument x Person Interaction
+
+```{r}
+exp4_arg_pers_tibble = full_test_results%>%
+  filter(Experiment=="Experiment 4" & StatisticalTest=="LRT")%>%
+  select(Model,TestStatistic,df,p.corrected)%>%
+  mutate(
+    p.corrected= case_when(
+      p.corrected<0.001 ~ "<0.001",
+      p.corrected>=0.001~ as.character(round(p.corrected,3))),
+   TestStatistic= case_when(
+    TestStatistic<0.1 ~ "<0.1",
+    TestStatistic>=0.1~ as.character(round(TestStatistic,1))))%>%
+  rename("Chisq"="TestStatistic",
+         "p"= "p.corrected")
+  
+exp4_arg_pers_tibble%>%  
+  knitr::kable(align='lrrr')
+```
+
+
+
+# Summary graph
+```{r}
+all_exps_long = all_exps%>%
+  pivot_longer(cols = c(mbert_base,bert_italian_base,bert_italian_xxl,gpt2_italian_small,geppetto,umberto_cased,xlm_mlm_100,xlm_roberta_base,xlm_roberta_large,xglm_2900,xglm_4500,xglm_7500
+  ),names_to = "MetricName", values_to = "MetricValue")
+
+real_exp_means= tribble(
+  ~Experiment, ~Condition, ~MetricName, ~MetricValue,
+  "1","1a","ReadingTime", 1550,
+  "1","1b","ReadingTime",2203,
+  "2","2a","ReadingTime",1358,
+  "2","2b","ReadingTime",1744,
+  "2","2c","ReadingTime",1537,
+  "2","2d","ReadingTime",1400,
+  "3","3a","ReadingTime",1884,
+  "3","3b","ReadingTime",1678,
+  "4","4a","ReadingTime",1629,
+  "4","4b","ReadingTime",1737,
+  "4","4c","ReadingTime",1502,
+  "4","4d","ReadingTime",1861
+)
+
+all_exps_long = all_exps_long%>%
+  add_row(real_exp_means)
+
+
+exp1 = all_exps_long%>%
+  filter(Experiment==1)%>%
+  mutate(Condition = fct_recode(Condition,
+                                "Subject" = "1a",
+                                "Object" = "1b"))%>%
+  mutate(Experiment = "Exp. 1:\nSubj. vs. Obj.")
+
+exp2.1 = all_exps_long%>%
+  filter(Experiment==2&(Condition=="2a"|Condition=="2b"))%>%
+  mutate(Experiment = "2.1")%>%
+  mutate(Condition = fct_recode(Condition,
+                                "Subject" = "2a",
+                                "Object" = "2b"))%>%
+  mutate(Experiment = "Exp. 2:\nSubj. vs. Obj.")
+
+exp2.2 = all_exps_long%>%
+  filter(Experiment==2&(Condition=="2b"|Condition=="2c"))%>%
+  mutate(Experiment = "2.2")%>%
+  mutate(Condition = fct_recode(Condition,
+                                "Name" = "2b",
+                                "Pronoun" = "2c"))%>%
+  mutate(Experiment = "Exp. 2:\nName vs. Pro.")
+
+
+
+exp4.1 = all_exps_long%>%
+  filter(Experiment==4)%>%
+  mutate(Experiment = "Exp. 4:\nArgument x Person")%>%
+  mutate(Condition = fct_recode(Condition,
+                                "1p/2p Subject" = "4a",
+                                "1p/2p Object" = "4b",
+                                "3p Subject" = "4c",
+                                "3p Object" = "4d"))
+
+
+exp4.2 = all_exps_long%>%
+  filter(Experiment==4)%>%
+  mutate(Condition= case_when(
+    Condition=="4a"|Condition=="4c" ~ "Subject",
+    Condition=="4b"|Condition=="4d" ~ "Object"
+  ))%>%
+  mutate(Experiment = "Exp. 4:\nSubj. vs. Obj.")
+
+
+
+all_exps_long_for_graph = exp1 %>%
+  add_row(exp2.1)%>%
+  add_row(exp2.2)%>%
+  add_row(exp4.1)%>%
+  add_row(exp4.2)%>%
+  mutate(MetricName = fct_relevel(MetricName,
+                                  "ReadingTime",
+                                  "geppetto",
+                                  "gpt2_italian_small",
+                                  "umberto_cased",
+                                  "bert_italian_base",
+                                  "bert_italian_xxl",
+                                  "mbert_base",
+                                  "xlm_mlm_100",
+                                  "xlm_roberta_base",
+                                  "xlm_roberta_large",
+                                  "xglm_2900",
+                                  "xglm_4500",
+                                  "xglm_7500"))%>%
+  mutate(MetricName = fct_recode(MetricName,
+                                 "Human Reading Time (ms)" = "ReadingTime",
+                                 "mBERT (Base) Surprisal" = "mbert_base",
+                                 "Italian BERT (Base) Surprisal" = "bert_italian_base",
+                                 "Italian BERT (XXL) Surprisal" = "bert_italian_xxl",
+                                 "Italian GPT2 (Retrained) Surprisal"="gpt2_italian_small",
+                                 "GePpeTto Surprisal"="geppetto",
+                                 "UmBERTo Surprisal"="umberto_cased",
+                                 "XLM-100 Surprisal"="xlm_mlm_100",
+                                 "XLM-RoBERTa (Base) Surprisal"="xlm_roberta_base",
+                                 "XLM-RoBERTa (Large) Surprisal"="xlm_roberta_large",
+                                 "XGLM 2.9B Surprisal" = "xglm_2900",
+                                 "XGLM 4.5B Surprisal" = "xglm_4500",
+                                 "XGLM 7.5B Surprisal" = "xglm_7500"),         
+         Condition = fct_relevel(Condition,
+                                 "Subject",
+                                 "Object",
+                                 "SingAnt.",
+                                 "PlurAnt.",
+                                 "1p/2p Subject",
+                                 "1p/2p Object",
+                                 "3p Subject",
+                                 "3p Object"),
+         Experiment = fct_relevel(Experiment,
+                                  "Exp. 1:\nSubj. vs. Obj.",
+                                  "Exp. 2:\nSubj. vs. Obj.",
+                                  "Exp. 2:\nName vs. Pro.",
+                                  "Exp. 4:\nSubj. vs. Obj.",
+                                  "Exp. 4:\nArgument x Person"))
+
+
+signif_level = function(df,model){
+  p_val = df%>%
+    filter(Model==!!model)%>%
+    .$p
+  signif = case_when(p_val=="<0.001" ~ "***",
+                     as.numeric(p_val)<0.01 ~ "**",
+                     as.numeric(p_val)<0.05 ~ "*",
+                     as.numeric(p_val)<0.1 ~ ".",
+                     TRUE ~ "ns")
+  signif
+}
+
+annotation_df = tribble(
+  ~Experiment, ~MetricName, ~start, ~end, ~y,~label,
+  "Exp. 1:\nSubj. vs. Obj.", "Human Reading Time (ms)", "Subject", "Object", 2400, "**",
+  
+  "Exp. 1:\nSubj. vs. Obj.", "GePpeTto Surprisal", "Subject", "Object", 35, signif_level(exp1_subj_obj_tibble,"GePpeTto"),
+  "Exp. 1:\nSubj. vs. Obj.", "Italian GPT2 (Retrained) Surprisal", "Subject", "Object", 35, signif_level(exp1_subj_obj_tibble,"GPT-2 Italian"),
+  "Exp. 1:\nSubj. vs. Obj.", "UmBERTo Surprisal", "Subject", "Object", 38, signif_level(exp1_subj_obj_tibble,"UmBERTo"),
+  "Exp. 1:\nSubj. vs. Obj.", "Italian BERT (Base) Surprisal", "Subject", "Object", 50, signif_level(exp1_subj_obj_tibble,"It BERT Base"),
+  "Exp. 1:\nSubj. vs. Obj.", "Italian BERT (XXL) Surprisal", "Subject", "Object", 40, signif_level(exp1_subj_obj_tibble,"It BERT XXL"),
+  "Exp. 1:\nSubj. vs. Obj.", "mBERT (Base) Surprisal", "Subject", "Object", 60, signif_level(exp1_subj_obj_tibble,"mBERT"),
+  "Exp. 1:\nSubj. vs. Obj.", "XLM-100 Surprisal", "Subject", "Object", 140, signif_level(exp1_subj_obj_tibble,"XLM-100"),
+  "Exp. 1:\nSubj. vs. Obj.", "XLM-RoBERTa (Base) Surprisal", "Subject", "Object", 50, signif_level(exp1_subj_obj_tibble,"XLM-R Base"),
+  "Exp. 1:\nSubj. vs. Obj.", "XLM-RoBERTa (Large) Surprisal", "Subject", "Object", 53, signif_level(exp1_subj_obj_tibble,"XLM-R Large"),
+  "Exp. 1:\nSubj. vs. Obj.", "XGLM 2.9B Surprisal", "Subject", "Object", 30, signif_level(exp1_subj_obj_tibble,"XGLM 2.9B"),
+  "Exp. 1:\nSubj. vs. Obj.", "XGLM 4.5B Surprisal", "Subject", "Object", 31, signif_level(exp1_subj_obj_tibble,"XGLM 4.5B"),
+  "Exp. 1:\nSubj. vs. Obj.", "XGLM 7.5B Surprisal", "Subject", "Object", 31, signif_level(exp1_subj_obj_tibble,"XGLM 7.5B"),
+  
+  "Exp. 2:\nSubj. vs. Obj.", "Human Reading Time (ms)", "Subject", "Object", 2400, "**",
+  
+  "Exp. 2:\nSubj. vs. Obj.", "GePpeTto Surprisal", "Subject", "Object", 35, signif_level(exp2_subj_obj_tibble,"GePpeTto"),
+  "Exp. 2:\nSubj. vs. Obj.", "Italian GPT2 (Retrained) Surprisal", "Subject", "Object", 35,  signif_level(exp2_subj_obj_tibble,"GPT-2 Italian"),
+  "Exp. 2:\nSubj. vs. Obj.", "UmBERTo Surprisal", "Subject", "Object", 38,  signif_level(exp2_subj_obj_tibble,"UmBERTo"),
+  "Exp. 2:\nSubj. vs. Obj.", "Italian BERT (Base) Surprisal", "Subject", "Object", 50, signif_level(exp2_subj_obj_tibble,"It BERT Base"),
+  "Exp. 2:\nSubj. vs. Obj.", "Italian BERT (XXL) Surprisal", "Subject", "Object", 40, signif_level(exp2_subj_obj_tibble,"It BERT XXL"),
+  "Exp. 2:\nSubj. vs. Obj.", "mBERT (Base) Surprisal", "Subject", "Object", 60, signif_level(exp2_subj_obj_tibble,"mBERT"),
+  "Exp. 2:\nSubj. vs. Obj.", "XLM-100 Surprisal", "Subject", "Object", 140, signif_level(exp2_subj_obj_tibble,"XLM-100"),
+  "Exp. 2:\nSubj. vs. Obj.", "XLM-RoBERTa (Base) Surprisal", "Subject", "Object", 50, signif_level(exp2_subj_obj_tibble,"XLM-R Base"),
+  "Exp. 2:\nSubj. vs. Obj.", "XLM-RoBERTa (Large) Surprisal", "Subject", "Object", 50, signif_level(exp2_subj_obj_tibble,"XLM-R Large"),
+  "Exp. 2:\nSubj. vs. Obj.", "XGLM 2.9B Surprisal", "Subject", "Object", 30, signif_level(exp2_subj_obj_tibble,"XGLM 2.9B"),
+  "Exp. 2:\nSubj. vs. Obj.", "XGLM 4.5B Surprisal", "Subject", "Object", 31, signif_level(exp2_subj_obj_tibble,"XGLM 4.5B"),
+  "Exp. 2:\nSubj. vs. Obj.", "XGLM 7.5B Surprisal", "Subject", "Object", 31, signif_level(exp2_subj_obj_tibble,"XGLM 7.5B"),
+  
+  "Exp. 2:\nName vs. Pro.", "Human Reading Time (ms)", "Name", "Pronoun", 2400, "*",
+  
+  "Exp. 2:\nName vs. Pro.", "GePpeTto Surprisal", "Name", "Pronoun", 35, signif_level(exp2_name_pron_tibble,"GePpeTto"),
+  "Exp. 2:\nName vs. Pro.", "Italian GPT2 (Retrained) Surprisal", "Name", "Pronoun", 35, signif_level(exp2_name_pron_tibble,"GPT-2 Italian"),
+  "Exp. 2:\nName vs. Pro.", "UmBERTo Surprisal", "Name", "Pronoun", 38, signif_level(exp2_name_pron_tibble,"UmBERTo"),
+  "Exp. 2:\nName vs. Pro.", "Italian BERT (Base) Surprisal", "Name", "Pronoun", 50, signif_level(exp2_name_pron_tibble,"It BERT Base"),
+  "Exp. 2:\nName vs. Pro.", "Italian BERT (XXL) Surprisal", "Name", "Pronoun", 40, signif_level(exp2_name_pron_tibble,"It BERT XXL"),
+  "Exp. 2:\nName vs. Pro.", "mBERT (Base) Surprisal", "Name", "Pronoun", 60, signif_level(exp2_name_pron_tibble,"mBERT"),
+  "Exp. 2:\nName vs. Pro.", "XLM-100 Surprisal", "Name", "Pronoun", 140, signif_level(exp2_name_pron_tibble,"XLM-100"),
+  "Exp. 2:\nName vs. Pro.", "XLM-RoBERTa (Base) Surprisal", "Name", "Pronoun", 50, signif_level(exp2_name_pron_tibble,"XLM-R Base"),
+  "Exp. 2:\nName vs. Pro.", "XLM-RoBERTa (Large) Surprisal", "Name", "Pronoun", 50, signif_level(exp2_name_pron_tibble,"XLM-R Large"),
+  "Exp. 2:\nName vs. Pro.", "XGLM 2.9B Surprisal", "Name", "Pronoun", 30, signif_level(exp2_name_pron_tibble,"XGLM 2.9B"),
+  "Exp. 2:\nName vs. Pro.", "XGLM 4.5B Surprisal", "Name", "Pronoun", 31, signif_level(exp2_name_pron_tibble,"XGLM 4.5B"),
+  "Exp. 2:\nName vs. Pro.", "XGLM 7.5B Surprisal", "Name", "Pronoun", 31, signif_level(exp2_name_pron_tibble,"XGLM 7.5B"),
+  
+  
+  "Exp. 4:\nArgument x Person", "Human Reading Time (ms)", "1p/2p Subject", "1p/2p Object", 2300, "",  
+  "Exp. 4:\nArgument x Person", "Human Reading Time (ms)", "3p Subject", "3p Object", 2300, "",  
+  "Exp. 4:\nArgument x Person", "Human Reading Time (ms)", "1p/2p Object", "3p Subject", 2400, "**",  
+  
+  "Exp. 4:\nArgument x Person", "GePpeTto Surprisal", "1p/2p Subject", "1p/2p Object", 33, "",
+  "Exp. 4:\nArgument x Person", "Italian GPT2 (Retrained) Surprisal", "1p/2p Subject", "1p/2p Object", 35, "",
+  "Exp. 4:\nArgument x Person", "UmBERTo Surprisal", "1p/2p Subject", "1p/2p Object", 35, "",
+  "Exp. 4:\nArgument x Person", "Italian BERT (Base) Surprisal", "1p/2p Subject", "1p/2p Object", 45, "",
+  "Exp. 4:\nArgument x Person", "Italian BERT (XXL) Surprisal", "1p/2p Subject", "1p/2p Object", 40, "",
+  "Exp. 4:\nArgument x Person", "mBERT (Base) Surprisal", "1p/2p Subject", "1p/2p Object", 62, "",
+  "Exp. 4:\nArgument x Person", "XLM-100 Surprisal", "1p/2p Subject", "1p/2p Object", 140, "",
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Base) Surprisal", "1p/2p Subject", "1p/2p Object", 49, "",
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Large) Surprisal", "1p/2p Subject", "1p/2p Object", 49, "",
+  "Exp. 4:\nArgument x Person", "XGLM 2.9B Surprisal", "1p/2p Subject", "1p/2p Object", 30, "",
+  "Exp. 4:\nArgument x Person", "XGLM 4.5B Surprisal", "1p/2p Subject", "1p/2p Object", 31, "",
+  "Exp. 4:\nArgument x Person", "XGLM 7.5B Surprisal", "1p/2p Subject", "1p/2p Object", 31, ""  ,
+  
+  "Exp. 4:\nArgument x Person", "GePpeTto Surprisal", "3p Subject", "3p Object", 33, "",
+  "Exp. 4:\nArgument x Person", "Italian GPT2 (Retrained) Surprisal", "3p Subject", "3p Object", 35, "",
+  "Exp. 4:\nArgument x Person", "UmBERTo Surprisal", "3p Subject", "3p Object", 35, "",
+  "Exp. 4:\nArgument x Person", "Italian BERT (Base) Surprisal", "3p Subject", "3p Object", 45, "",
+  "Exp. 4:\nArgument x Person", "Italian BERT (XXL) Surprisal", "3p Subject", "3p Object", 40, "",
+  "Exp. 4:\nArgument x Person", "mBERT (Base) Surprisal", "3p Subject", "3p Object", 62, "",
+  "Exp. 4:\nArgument x Person", "XLM-100 Surprisal", "3p Subject", "3p Object", 140, "",
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Base) Surprisal", "3p Subject", "3p Object", 49, "",
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Large) Surprisal", "3p Subject", "3p Object", 49, "",
+  "Exp. 4:\nArgument x Person", "XGLM 2.9B Surprisal", "3p Subject", "3p Object", 30, "",
+  "Exp. 4:\nArgument x Person", "XGLM 4.5B Surprisal", "3p Subject", "3p Object", 31, "",
+  "Exp. 4:\nArgument x Person", "XGLM 7.5B Surprisal", "3p Subject", "3p Object", 31, ""  ,
+  
+  "Exp. 4:\nArgument x Person", "GePpeTto Surprisal", "1p/2p Object", "3p Subject", 35, signif_level(exp4_arg_pers_tibble,"GePpeTto"),
+  "Exp. 4:\nArgument x Person", "Italian GPT2 (Retrained) Surprisal", "1p/2p Object", "3p Subject", 38,  signif_level(exp4_arg_pers_tibble,"GPT-2 Italian"),
+  "Exp. 4:\nArgument x Person", "UmBERTo Surprisal", "1p/2p Object", "3p Subject", 38, signif_level(exp4_arg_pers_tibble,"UmBERTo"),
+  "Exp. 4:\nArgument x Person", "Italian BERT (Base) Surprisal", "1p/2p Object", "3p Subject", 50, signif_level(exp4_arg_pers_tibble,"It BERT Base"),
+  "Exp. 4:\nArgument x Person", "Italian BERT (XXL) Surprisal", "1p/2p Object", "3p Subject", 43, signif_level(exp4_arg_pers_tibble,"It BERT XXL"),
+  "Exp. 4:\nArgument x Person", "mBERT (Base) Surprisal", "1p/2p Object", "3p Subject", 67, signif_level(exp4_arg_pers_tibble,"mBERT"),
+  "Exp. 4:\nArgument x Person", "XLM-100 Surprisal", "1p/2p Object", "3p Subject", 150, signif_level(exp4_arg_pers_tibble,"XLM-100"),
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Base) Surprisal", "1p/2p Object", "3p Subject", 53, signif_level(exp4_arg_pers_tibble,"XLM-R Base"),
+  "Exp. 4:\nArgument x Person", "XLM-RoBERTa (Large) Surprisal", "1p/2p Object", "3p Subject", 53, signif_level(exp4_arg_pers_tibble,"XLM-R Large"),
+  "Exp. 4:\nArgument x Person", "XGLM 2.9B Surprisal", "1p/2p Object", "3p Subject", 33, signif_level(exp4_arg_pers_tibble,"XGLM 2.9B"),
+  "Exp. 4:\nArgument x Person", "XGLM 4.5B Surprisal", "1p/2p Object", "3p Subject", 33, signif_level(exp4_arg_pers_tibble,"XGLM 4.5B"),
+  "Exp. 4:\nArgument x Person", "XGLM 7.5B Surprisal", "1p/2p Object", "3p Subject", 33, signif_level(exp4_arg_pers_tibble,"XGLM 7.5B"),
+  
+  "Exp. 4:\nSubj. vs. Obj.", "Human Reading Time (ms)", "Subject", "Object", 2400, "*",  
+  
+  "Exp. 4:\nSubj. vs. Obj.", "GePpeTto Surprisal", "Subject", "Object", 35, signif_level(exp4_subj_obj_tibble,"GePpeTto"),
+  "Exp. 4:\nSubj. vs. Obj.", "Italian GPT2 (Retrained) Surprisal", "Subject", "Object", 35, signif_level(exp4_subj_obj_tibble,"GPT-2 Italian"),
+  "Exp. 4:\nSubj. vs. Obj.", "UmBERTo Surprisal", "Subject", "Object", 35,  signif_level(exp4_subj_obj_tibble,"UmBERTo"),
+  "Exp. 4:\nSubj. vs. Obj.", "Italian BERT (Base) Surprisal", "Subject", "Object", 50, signif_level(exp4_subj_obj_tibble,"It BERT Base"),
+  "Exp. 4:\nSubj. vs. Obj.", "Italian BERT (XXL) Surprisal", "Subject", "Object", 40, signif_level(exp4_subj_obj_tibble,"It BERT XXL"),
+  "Exp. 4:\nSubj. vs. Obj.", "mBERT (Base) Surprisal", "Subject", "Object", 60, signif_level(exp4_subj_obj_tibble,"mBERT"),
+  "Exp. 4:\nSubj. vs. Obj.", "XLM-100 Surprisal", "Subject", "Object", 140, signif_level(exp4_subj_obj_tibble,"XLM-100"),
+  "Exp. 4:\nSubj. vs. Obj.", "XLM-RoBERTa (Base) Surprisal", "Subject", "Object", 50, signif_level(exp4_subj_obj_tibble,"XLM-R Base"),
+  "Exp. 4:\nSubj. vs. Obj.", "XLM-RoBERTa (Large) Surprisal", "Subject", "Object", 50, signif_level(exp4_subj_obj_tibble,"XLM-R Large"),
+  "Exp. 4:\nSubj. vs. Obj.", "XGLM 2.9B Surprisal", "Subject", "Object", 30, signif_level(exp4_subj_obj_tibble,"XGLM 2.9B"),
+  "Exp. 4:\nSubj. vs. Obj.", "XGLM 4.5B Surprisal", "Subject", "Object", 31, signif_level(exp4_subj_obj_tibble,"XGLM 4.5B"),
+  "Exp. 4:\nSubj. vs. Obj.", "XGLM 7.5B Surprisal", "Subject", "Object", 31, signif_level(exp4_subj_obj_tibble,"XGLM 7.5B")
+)%>%
+  mutate(MetricName = fct_relevel(MetricName,
+                                  "Human Reading Time (ms)" ,
+                                  "GePpeTto Surprisal",
+                                  "Italian GPT2 (Retrained) Surprisal",
+                                  "UmBERTo Surprisal",
+                                  "Italian BERT (Base) Surprisal" ,
+                                  "Italian BERT (XXL) Surprisal" ,
+                                  "mBERT (Base) Surprisal",
+                                  "XLM-100 Surprisal",
+                                  "XLM-RoBERTa (Base) Surprisal",
+                                  "XLM-RoBERTa (Large) Surprisal",
+                                  "XGLM 2.9B Surprisal",
+                                  "XGLM 4.5B Surprisal",
+                                  "XGLM 7.5B Surprisal"))%>%
+  mutate(         Experiment = fct_relevel(Experiment,
+                                  "Exp. 1:\nSubj. vs. Obj.",
+                                  "Exp. 2:\nSubj. vs. Obj.",
+                                  "Exp. 2:\nName vs. Pro.",
+                                  "Exp. 4:\nSubj. vs. Obj.",
+                                  "Exp. 4:\nArgument x Person"))
+
+
+
+annotation_df2 = annotation_df%>%
+  filter(label!="")%>%
+  mutate(Significant = case_when(
+                                 label=="***" ~ "S",
+                                 label=="**" ~ "S",
+                                 label=="*" ~ "S",
+                                 TRUE ~ "NS"))%>%
+  select(-start,-end,-y,-label)
+
+
+graph = all_exps_long_for_graph%>%
+  left_join(annotation_df2)%>%
+  ggplot(aes(x=Condition, y = MetricValue))+ 
+  theme_minimal()+
+  geom_rect(data = annotation_df2,mapping = aes(fill = Significant, xmin = -Inf,xmax = Inf,ymin = -Inf,ymax = Inf),alpha=0.2,inherit.aes = FALSE)+
+  stat_summary(fun.data = mean_se,geom="pointrange", position=position_dodge(.9), size=.05,shape=1) + 
+  facet_grid(MetricName~Experiment,scales = "free", space = "free_x",
+                 switch = "y")+
+  theme(strip.text.y.left = element_text(angle=0,hjust=1), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.text.y = element_text(size=8),
+        strip.placement = "outside",
+        legend.position="none",
+        panel.spacing.y = unit(0.5, "lines")) +
+  ylab(NULL)+
+  geom_signif(
+    data = annotation_df,
+    aes(xmin = start, xmax = end, annotations = label,y_position = y),
+    textsize = 3, vjust = -0.2,
+    manual = TRUE,
+    color="black"
+  )+
+  scale_y_continuous(expand = expansion(mult = c(.2, .4)))+
+  scale_fill_manual(values = c(pal[6],pal[14]))
+
+
+
+
+final_graph = ggdraw(graph) +
+  draw_line(x=c(0,1),y=c(0.892,0.892))
+
+ggsave('final_graph.pdf',final_graph, height = 10.5, width = 9)
+
+```
+
+

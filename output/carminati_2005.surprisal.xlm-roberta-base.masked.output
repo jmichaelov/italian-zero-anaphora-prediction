@@ -1,0 +1,273 @@
+FullSentence	Sentence	TargetWords	Surprisal	NumTokens
+Quando hai litigato con Maria, eri molto prepotente.	Quando hai litigato con Maria, eri molto prepotente.	eri molto prepotente.	62.858717689122834	6
+Quando Maria ha litigato con te, eri molto prepotente.	Quando Maria ha litigato con te, eri molto prepotente.	eri molto prepotente.	55.463992422428966	6
+Quando Maria ha litigato con te, era molto prepotente.	Quando Maria ha litigato con te, era molto prepotente.	era molto prepotente.	41.82654529655509	6
+Quando hai litigato con Maria, era molto prepotente.	Quando hai litigato con Maria, era molto prepotente.	era molto prepotente.	50.77221312287351	6
+Adesso che lavori con Paola, sei sempre puntuale.	Adesso che lavori con Paola, sei sempre puntuale.	sei sempre puntuale.	38.02213131022454	5
+Adesso che Paola lavora con te, sei sempre puntuale.	Adesso che Paola lavora con te, sei sempre puntuale.	sei sempre puntuale.	35.025964143908	5
+Adesso che Paola lavora con te, è sempre puntuale.	Adesso che Paola lavora con te, è sempre puntuale.	è sempre puntuale.	31.213324176985957	5
+Adesso che lavori con Paola, è sempre puntuale.	Adesso che lavori con Paola, è sempre puntuale.	è sempre puntuale.	32.00023459921908	5
+Da quando collabori con Olga, hai avuto solo guai.	Da quando collabori con Olga, hai avuto solo guai.	hai avuto solo guai.	65.68721373317358	6
+Da quando Olga collabora con te, hai avuto solo guai.	Da quando Olga collabora con te, hai avuto solo guai.	hai avuto solo guai.	67.49585477930029	6
+Da quando Olga collabora con te, ha avuto solo guai.	Da quando Olga collabora con te, ha avuto solo guai.	ha avuto solo guai.	59.074051952644524	6
+Da quando collabori con Olga, ha avuto solo guai.	Da quando collabori con Olga, ha avuto solo guai.	ha avuto solo guai.	55.71380507215379	6
+Prima che tu chiarissi la questione con Bruno, eri impaziente.	Prima che tu chiarissi la questione con Bruno, eri impaziente.	eri impaziente.	54.55619844130796	5
+Prima che Bruno chiarisse la questione con te, eri impaziente.	Prima che Bruno chiarisse la questione con te, eri impaziente.	eri impaziente.	51.69569930883067	5
+Prima che Bruno chiarisse la questione con te, era impaziente.	Prima che Bruno chiarisse la questione con te, era impaziente.	era impaziente.	46.22662288012238	5
+Prima che tu chiarissi la questione con Bruno, era impaziente.	Prima che tu chiarissi la questione con Bruno, era impaziente.	era impaziente.	52.741472169592605	5
+Dopo che hai avuto quel siguido con Nando, ti comporti stranamente.	Dopo che hai avuto quel siguido con Nando, ti comporti stranamente.	ti comporti stranamente.	53.998840903612944	7
+Dopo che Nando ha avuto quel disguido con te, ti comporti stranamente.	Dopo che Nando ha avuto quel disguido con te, ti comporti stranamente.	ti comporti stranamente.	54.606710759504736	7
+Dopo che Nando ha avuto quel disguido con te, si comporta stranamente.	Dopo che Nando ha avuto quel disguido con te, si comporta stranamente.	si comporta stranamente.	31.389577024410798	5
+Dopo che hai avuto quel siguido con Nando, si comporta stranamente.	Dopo che hai avuto quel siguido con Nando, si comporta stranamente.	si comporta stranamente.	33.099634028675176	5
+Adesso che sei tornato da Maria, sei molto più felice.	Adesso che sei tornato da Maria, sei molto più felice.	sei molto più felice.	23.866813206702698	5
+Adesso che Maria è tornata da te, sei molto più felice.	Adesso che Maria è tornata da te, sei molto più felice.	sei molto più felice.	24.330158785359007	5
+Adesso che Maria è tornata da te, è molto piu felice.	Adesso che Maria è tornata da te, è molto piu felice.	è molto piu felice.	35.384749354682285	5
+Adesso che sei tornato da Maria, è molto piu felice.	Adesso che sei tornato da Maria, è molto piu felice.	è molto piu felice.	38.95477428157947	5
+L'ultima volta che sei uscito con Guido, hai pagato il conto.	L'ultima volta che sei uscito con Guido, hai pagato il conto.	hai pagato il conto.	42.83930618576084	6
+L'ultima volta che Guido è uscito con te, hai pagato il conto.	L'ultima volta che Guido è uscito con te, hai pagato il conto.	hai pagato il conto.	44.82440431216804	6
+L'ultima volta che Guido è uscito con te, ha pagato il conto.	L'ultima volta che Guido è uscito con te, ha pagato il conto.	ha pagato il conto.	40.64529985581933	6
+L'ultima volta che sei uscito con Guido, ha pagato il conto.	L'ultima volta che sei uscito con Guido, ha pagato il conto.	ha pagato il conto.	42.7878141433874	6
+Quando eri in classe con Lucia, avevi quindici anni.	Quando eri in classe con Lucia, avevi quindici anni.	avevi quindici anni.	56.8044078210312	6
+Quando Lucia era in classe con te, avevi quindici anni.	Quando Lucia era in classe con te, avevi quindici anni.	avevi quindici anni.	55.26406049186722	6
+Quando Lucia era in classe con te, aveva quindici anni.	Quando Lucia era in classe con te, aveva quindici anni.	aveva quindici anni.	35.210371641037405	5
+Quando eri in classe con Lucia, aveva quindici anni.	Quando eri in classe con Lucia, aveva quindici anni.	aveva quindici anni.	31.362965319481084	5
+Quando ti sei messo in contatto con Marta, abitavi ancora a Milano.	Quando ti sei messo in contatto con Marta, abitavi ancora a Milano.	abitavi ancora a Milano.	54.47421454274002	6
+Quando Marta si è messa in contatto con te, abitavi ancora a Milano.	Quando Marta si è messa in contatto con te, abitavi ancora a Milano.	abitavi ancora a Milano.	49.20056757236984	6
+Quando Marta si è messa in contatto con te, abitava ancora a Milano.	Quando Marta si è messa in contatto con te, abitava ancora a Milano.	abitava ancora a Milano.	41.89788800703327	6
+Quando ti sei messo in contatto con Marta, abitava ancora a Milano.	Quando ti sei messo in contatto con Marta, abitava ancora a Milano.	abitava ancora a Milano.	47.72338187354622	6
+Da quando hai rotto con Mario, sei di cattivo umore.	Da quando hai rotto con Mario, sei di cattivo umore.	sei di cattivo umore.	74.90905308211822	7
+Da quando Mario ha rotto con te, sei di cattivo umore.	Da quando Mario ha rotto con te, sei di cattivo umore.	sei di cattivo umore.	65.64507491006546	7
+Da quando Mario ha rotto con te, è di cattivo umore.	Da quando Mario ha rotto con te, è di cattivo umore.	è di cattivo umore.	52.06821485454611	7
+Da quando hai rotto con Mario, è di cattivo umore.	Da quando hai rotto con Mario, è di cattivo umore.	è di cattivo umore.	56.037656496927106	7
+Quando ho accettato di lavorare con Mario, non prevedevo complicazioni.	Quando ho accettato di lavorare con Mario, non prevedevo complicazioni.	non prevedevo complicazioni.	45.349994735247066	6
+Quando Mario ha accettato di lavorare con me, non prevedevo complicazioni.	Quando Mario ha accettato di lavorare con me, non prevedevo complicazioni.	non prevedevo complicazioni.	46.72201129365386	6
+Quando Mario ha accettato di lavorare con me, non prevedeva complicazioni.	Quando Mario ha accettato di lavorare con me, non prevedeva complicazioni.	non prevedeva complicazioni.	45.63852925535384	6
+Quando ho accettato di lavorare con Mario, non prevedeva complicazioni.	Quando ho accettato di lavorare con Mario, non prevedeva complicazioni.	non prevedeva complicazioni.	45.93978704669924	6
+Durante l'anno che ho abitato con Marco, ho imparato a cucinare.	Durante l'anno che ho abitato con Marco, ho imparato a cucinare.	ho imparato a cucinare.	24.253772684751365	6
+Durante l'anno che Marco ha abitato con me, ho imparato a cucinare.	Durante l'anno che Marco ha abitato con me, ho imparato a cucinare.	ho imparato a cucinare.	25.997422912919493	6
+Durante l'anno che Marco ha abitato con me, ha imparato a cucinare.	Durante l'anno che Marco ha abitato con me, ha imparato a cucinare.	ha imparato a cucinare.	26.821107347496863	6
+Durante l'anno che ho abitato con Marco, ha imparato a cucinare.	Durante l'anno che ho abitato con Marco, ha imparato a cucinare.	ha imparato a cucinare.	28.206571742674566	6
+Quando ho avuto bisogno di Maria, sono stato sempre gentile.	Quando ho avuto bisogno di Maria, sono stato sempre gentile.	sono stato sempre gentile.	29.40427432676454	6
+Quando Maria ha avuto bisogno di me, sono stato sempre gentile.	Quando Maria ha avuto bisogno di me, sono stato sempre gentile.	sono stato sempre gentile.	31.908467054105923	6
+Quando Maria ha avuto bisogno di me, è stata sempre gentile.	Quando Maria ha avuto bisogno di me, è stata sempre gentile.	è stata sempre gentile.	27.768552626263414	6
+Quando ho avuto bisogno di Maria, è stata sempre gentile.	Quando ho avuto bisogno di Maria, è stata sempre gentile.	è stata sempre gentile.	28.56245654204017	6
+Ogni volta che ho fatto una scommessa con Pietro, ho sempre perso.	Ogni volta che ho fatto una scommessa con Pietro, ho sempre perso.	ho sempre perso.	17.77378408382901	4
+Ogni volta che Roberto ha fatto una scommessa con me, ho sempre perso.	Ogni volta che Roberto ha fatto una scommessa con me, ho sempre perso.	ho sempre perso.	19.44285671411637	4
+Ogni volta che Roberto ha fatto una scommessa con me, ha sempre perso.	Ogni volta che Roberto ha fatto una scommessa con me, ha sempre perso.	ha sempre perso.	19.3328916638244	4
+Ogni volta che ho fatto una scommessa con Pietro, ha sempre perso.	Ogni volta che ho fatto una scommessa con Pietro, ha sempre perso.	ha sempre perso.	18.99449664324971	4
+L'ultima volta che ho cucinato per Franca, ero in vacanza.	L'ultima volta che ho cucinato per Franca, ero in vacanza.	ero in vacanza.	25.52934620863996	4
+L'ultima volta che Franca ha cucinato per me, ero in vacanza.	L'ultima volta che Franca ha cucinato per me, ero in vacanza.	ero in vacanza.	25.767032682769447	4
+L'ultima volta che Franca ha cucinato per me, era in vacanza.	L'ultima volta che Franca ha cucinato per me, era in vacanza.	era in vacanza.	22.633197664444083	4
+L'ultima volta che ho cucinato per Franca, era in vacanza.	L'ultima volta che ho cucinato per Franca, era in vacanza.	era in vacanza.	21.318808735239017	4
+Dopo che ho divorziato da Lucio, ho cambiato lavoro.	Dopo che ho divorziato da Lucio, ho cambiato lavoro.	ho cambiato lavoro.	24.309943031654743	5
+Dopo che Lucio ha divorziato da me, ho cambiato lavoro.	Dopo che Lucio ha divorziato da me, ho cambiato lavoro.	ho cambiato lavoro.	27.71633265902875	5
+Dopo che Lucio ha divorziato da me, ha cambiato lavoro.	Dopo che Lucio ha divorziato da me, ha cambiato lavoro.	ha cambiato lavoro.	30.276871221049355	5
+Dopo che ho divorziato da Lucio, ha cambiato lavoro.	Dopo che ho divorziato da Lucio, ha cambiato lavoro.	ha cambiato lavoro.	29.385621085975124	5
+Quando ho fatto la pace con Mario, avevo già la ragazza.	Quando ho fatto la pace con Mario, avevo già la ragazza.	avevo già la ragazza.	38.02964776266302	5
+Quando Mario ha fatto la pace con me, avevo già la ragazza.	Quando Mario ha fatto la pace con me, avevo già la ragazza.	avevo già la ragazza.	38.96046292250029	5
+Quando Mario ha fatto la pace con me, aveva già la ragazza.	Quando Mario ha fatto la pace con me, aveva già la ragazza.	aveva già la ragazza.	37.5344195002929	5
+Quando ho fatto la pace con Mario, aveva già la ragazza.	Quando ho fatto la pace con Mario, aveva già la ragazza.	aveva già la ragazza.	37.826126897111926	5
+Prima che mi separassi da Gianni, avevo già un altro uomo.	Prima che mi separassi da Gianni, avevo già un altro uomo.	avevo già un altro uomo.	34.186310647066165	6
+Prima che Gianni si separasse da me, avevo già un altro uomo.	Prima che Gianni si separasse da me, avevo già un altro uomo.	avevo già un altro uomo.	30.849913334477943	6
+Prima che Gianni si separasse da me, aveva già un'altra donna.	Prima che Gianni si separasse da me, aveva già un'altra donna.	aveva già un'altra donna.	37.829616728291136	7
+Prima che mi separassi da Gianni, aveva già un'altra donna.	Prima che mi separassi da Gianni, aveva già un'altra donna.	aveva già un'altra donna.	41.310839087665535	7
+Dopo che mi sono riconciliato con Ugo, sono più tollerante.	Dopo che mi sono riconciliato con Ugo, sono più tollerante.	sono più tollerante.	35.88734939480039	5
+Dopo che Ugo si è riconciliato con me, sono più tollerante.	Dopo che Ugo si è riconciliato con me, sono più tollerante.	sono più tollerante.	36.33896101719175	5
+Dopo che Ugo si è riconciliato con me, è più tollerante.	Dopo che Ugo si è riconciliato con me, è più tollerante.	è più tollerante.	39.155878110389594	5
+Dopo che mi sono riconciliato con Ugo, è più tollerante.	Dopo che mi sono riconciliato con Ugo, è più tollerante.	è più tollerante.	37.913003218700005	5
+Quando ho chiesto consiglio a Remo, non sapevo che cosa fare.	Quando ho chiesto consiglio a Remo, non sapevo che cosa fare.	non sapevo che cosa fare.	39.9138482060258	7
+Quando Remo ha chiesto consiglio a me, non sapevo che cosa fare.	Quando Remo ha chiesto consiglio a me, non sapevo che cosa fare.	non sapevo che cosa fare.	35.92969860003892	7
+Quando Remo ha chiesto consiglio a me, non sapeva che cosa fare.	Quando Remo ha chiesto consiglio a me, non sapeva che cosa fare.	non sapeva che cosa fare.	36.145207407874146	7
+Quando ho chiesto consiglio a Remo, non sapeva che cosa fare.	Quando ho chiesto consiglio a Remo, non sapeva che cosa fare.	non sapeva che cosa fare.	40.0353806271895	7
+Quando Mario chiama Liliana, è contento.	Quando Mario chiama Liliana, è contento.	è contento.	24.34623987112431	4
+Quando Mario chiama Liliana, è contenta.	Quando Mario chiama Liliana, è contenta.	è contenta.	26.427610001836175	4
+Dopo che Paola ha telefonato a Piero, è andata al cinema.	Dopo che Paola ha telefonato a Piero, è andata al cinema.	è andata al cinema.	32.64065960478446	6
+Dopo che Paola ha telefonato a Piero, è andato al cinema.	Dopo che Paola ha telefonato a Piero, è andato al cinema.	è andato al cinema.	35.16652499092684	6
+Prima che Maria sposasse Roberto, era sempre serena.	Prima che Maria sposasse Roberto, era sempre serena.	era sempre serena.	34.00708107897173	5
+Prima che Maria sposasse Roberto, era sempre sereno.	Prima che Maria sposasse Roberto, era sempre sereno.	era sempre sereno.	37.83954659730919	5
+Quando Giuseppe ha insultato Chiara, era ubriaco.	Quando Giuseppe ha insultato Chiara, era ubriaco.	era ubriaco.	64.51807319546528	6
+Quando Giuseppe ha insultato Chiara, era ubriaca.	Quando Giuseppe ha insultato Chiara, era ubriaca.	era ubriaca.	49.2978734326393	5
+Prima che Flavio conoscesse Donata, era piuttosto grasso.	Prima che Flavio conoscesse Donata, era piuttosto grasso.	era piuttosto grasso.	40.96172626230711	5
+Prima che Flavio conoscesse Donata, era piuttosto grassa.	Prima che Flavio conoscesse Donata, era piuttosto grassa.	era piuttosto grassa.	44.63609342768466	5
+Dopo che Marina ha salutato Enrico, è salita sul treno.	Dopo che Marina ha salutato Enrico, è salita sul treno.	è salita sul treno.	42.83290754377997	6
+Dopo che Marina ha salutato Enrico, è salito sul treno.	Dopo che Marina ha salutato Enrico, è salito sul treno.	è salito sul treno.	55.535582573169606	7
+Quando Gianni ha salutato Rosa, si è messo a piangere.	Quando Gianni ha salutato Rosa, si è messo a piangere.	si è messo a piangere.	41.788654168441816	7
+Quando Gianni ha salutato Rosa, si è messa a piangere.	Quando Gianni ha salutato Rosa, si è messa a piangere.	si è messa a piangere.	42.81649658672773	7
+Da quando Francesca frequenta Sandro, è diventata arrogante.	Da quando Francesca frequenta Sandro, è diventata arrogante.	è diventata arrogante.	41.50772065453644	6
+Da quando Francesca frequenta Sandro, è diventato arrogante.	Da quando Francesca frequenta Sandro, è diventato arrogante.	è diventato arrogante.	42.28650198737692	6
+Adesso che Elena lavora con Carlo, è tranquilla.	Adesso che Elena lavora con Carlo, è tranquilla.	è tranquilla.	17.690643149849592	3
+Adesso che Elena lavora con Carlo, è tranquillo.	Adesso che Elena lavora con Carlo, è tranquillo.	è tranquillo.	28.022990278648674	4
+Quando Silvio è andato in vacanza con Emma, si è annoiato.	Quando Silvio è andato in vacanza con Emma, si è annoiato.	si è annoiato.	30.5788059815565	6
+Quando Silvio è andato in vacanza con Emma, si è annoiata.	Quando Silvio è andato in vacanza con Emma, si è annoiata.	si è annoiata.	38.13362093623734	6
+Dopo che Maria ha litigato con Franco, è diventata intollerabile.	Dopo che Maria ha litigato con Franco, è diventata intollerabile.	è diventata intollerabile.	42.14032742122892	7
+Dopo che Maria ha litigato con Franco, è diventato intollerabile.	Dopo che Maria ha litigato con Franco, è diventato intollerabile.	è diventato intollerabile.	47.72846521253645	7
+Dopo che Irene ha parlato con Vito, si è sentita sollevata.	Dopo che Irene ha parlato con Vito, si è sentita sollevata.	si è sentita sollevata.	48.08565812133301	8
+Dopo che Irene ha parlato con Vito, si è sentito sollevato.	Dopo che Irene ha parlato con Vito, si è sentito sollevato.	si è sentito sollevato.	51.70180971788175	8
+Quando Pietro ha dato un bacio ad Angela, sembrava un po' impacciato.	Quando Pietro ha dato un bacio ad Angela, sembrava un po' impacciato.	sembrava un po' impacciato.	63.51430526856464	9
+Quando Pietro ha dato un bacio ad Angela, sembrava un po' impacciata.	Quando Pietro ha dato un bacio ad Angela, sembrava un po' impacciata.	sembrava un po' impacciata.	65.30403179043775	9
+Quando Stefano ha licenziato Angela, era molto arrabbiato.	Quando Stefano ha licenziato Angela, era molto arrabbiato.	era molto arrabbiato.	49.71697413358053	6
+Quando Stefano ha licenziato Angela, era molto arrabbiata.	Quando Stefano ha licenziato Angela, era molto arrabbiata.	era molto arrabbiata.	55.81485737465412	6
+Quando Ettore ha presentato Giovanna ai genitori, era nervoso.	Quando Ettore ha presentato Giovanna ai genitori, era nervoso.	era nervoso.	25.287930931229138	4
+Quando Ettore ha presentato Giovanna ai genitori, era nervosa.	Quando Ettore ha presentato Giovanna ai genitori, era nervosa.	era nervosa.	27.012834422836107	4
+Dopo che Marcello ha pubblicizzato il caso di Livia, è diventato famoso.	Dopo che Marcello ha pubblicizzato il caso di Livia, è diventato famoso.	è diventato famoso.	21.198713339254127	5
+Dopo che Marcello ha pubblicizzato il caso di Livia, è diventata famosa.	Dopo che Marcello ha pubblicizzato il caso di Livia, è diventata famosa.	è diventata famosa.	24.7893789130307	5
+Dopo che Claudia ha rivisto Sergio, è diventata nevrotica.	Dopo che Claudia ha rivisto Sergio, è diventata nevrotica.	è diventata nevrotica.	47.82750551364194	7
+Dopo che Claudia ha rivisto Sergio, è diventato nevrotico.	Dopo che Claudia ha rivisto Sergio, è diventato nevrotico.	è diventato nevrotico.	43.81432595042275	7
+Quando Daniele è ritornato da Anna, era molto depresso.	Quando Daniele è ritornato da Anna, era molto depresso.	era molto depresso.	40.205199330597296	6
+Quando Daniele è ritornato da Anna, era molto depressa.	Quando Daniele è ritornato da Anna, era molto depressa.	era molto depressa.	46.005029756747774	6
+Dopo che Adriana ha rotto con Mimmo, è diventata insopportabile.	Dopo che Adriana ha rotto con Mimmo, è diventata insopportabile.	è diventata insopportabile.	69.08958333786896	9
+Dopo che Adriana ha rotto con Mimmo, è diventato insopportabile.	Dopo che Adriana ha rotto con Mimmo, è diventato insopportabile.	è diventato insopportabile.	69.78766038573065	9
+Mentre Lorenzo salutava Daniela, sembrava molto sereno.	Mentre Lorenzo salutava Daniela, sembrava molto sereno.	sembrava molto sereno.	38.3507018800047	6
+Mentre Lorenzo salutava Daniela, sembrava molto serena.	Mentre Lorenzo salutava Daniela, sembrava molto serena.	sembrava molto serena.	40.6730317540997	6
+Quando Luisa ha raccontato l'incidente ad Antonio, è impallidita.	Quando Luisa ha raccontato l'incidente ad Antonio, è impallidita.	è impallidita.	45.17487921285515	5
+Quando Luisa ha raccontato l'incidente ad Antonio, è impallidito.	Quando Luisa ha raccontato l'incidente ad Antonio, è impallidito.	è impallidito.	47.98107497946551	5
+Prima che Lina si riconciliasse con Davide, era piuttosto seccata.	Prima che Lina si riconciliasse con Davide, era piuttosto seccata.	era piuttosto seccata.	46.91697042592166	5
+Prima che Lina si riconciliasse con Davide, era piuttosto seccato.	Prima che Lina si riconciliasse con Davide, era piuttosto seccato.	era piuttosto seccato.	41.64600372784606	5
+Mentre Carlo descriveva il miracolo a Rosa, era estatico.	Mentre Carlo descriveva il miracolo a Rosa, era estatico.	era estatico.	39.74234297814225	4
+Mentre Carlo descriveva il miracolo a Rosa, era estatica.	Mentre Carlo descriveva il miracolo a Rosa, era estatica.	era estatica.	39.83974554411719	4
+Prima che Guglielmo uscisse con Teresa, era molto timido.	Prima che Guglielmo uscisse con Teresa, era molto timido.	era molto timido.	30.52716567170981	5
+Prima che Guglielmo uscisse con Teresa, era molto timida.	Prima che Guglielmo uscisse con Teresa, era molto timida.	era molto timida.	34.459331252901364	5
+Adesso che Roberta lavora con Luigi, sembra più rilassata.	Adesso che Roberta lavora con Luigi, sembra più rilassata.	sembra più rilassata.	33.51995426547905	5
+Adesso che Roberta lavora con Luigi, sembra più rilassato.	Adesso che Roberta lavora con Luigi, sembra più rilassato.	sembra più rilassato.	33.64700166251979	5
+Prima che Daniele andasse a vivere con Piera, era molto ansioso.	Prima che Daniele andasse a vivere con Piera, era molto ansioso.	era molto ansioso.	40.14158214691188	6
+Prima che Daniele andasse a vivere con Piera, era molto ansiosa.	Prima che Daniele andasse a vivere con Piera, era molto ansiosa.	era molto ansiosa.	44.32050202567144	6
+Quando Carlotta litiga con Mario, rimane imbronciata per giorni.	Quando Carlotta litiga con Mario, rimane imbronciata per giorni.	rimane imbronciata per giorni.	83.03943632621201	8
+Quando Carlotta litiga con Mario, rimane imbronciato per giorni.	Quando Carlotta litiga con Mario, rimane imbronciato per giorni.	rimane imbronciato per giorni.	84.32263476980313	8
+Non appena Pina ha scoperto il segreto di Mario, è diventata sospettosa.	Non appena Pina ha scoperto il segreto di Mario, è diventata sospettosa.	è diventata sospettosa.	43.42273453213493	7
+Non appena Pina ha scoperto il segreto di Mario, è diventato sospettoso.	Non appena Pina ha scoperto il segreto di Mario, è diventato sospettoso.	è diventato sospettoso.	38.020858644714046	7
+Dopo che Roberto ha incontrato Irma al bar, è tornato a casa.	Dopo che Roberto ha incontrato Irma al bar, è tornato a casa.	è tornato a casa.	20.85357893338007	6
+Dopo che Roberto ha incontrato Irma al bar, è tornata a casa.	Dopo che Roberto ha incontrato Irma al bar, è tornata a casa.	è tornata a casa.	26.13109138927221	6
+Mentre Anna raccontava il terribile incidente a Giorgio, si è sentita mancare.	Mentre Anna raccontava il terribile incidente a Giorgio, si è sentita mancare.	si è sentita mancare.	39.79747611137209	6
+Mentre Anna raccontava il terribile incidente a Giorgio, si è sentito mancare.	Mentre Anna raccontava il terribile incidente a Giorgio, si è sentito mancare.	si è sentito mancare.	42.164789560238724	6
+Quando Maria cerca Roberto, diventa ansiosa.	Quando Maria cerca Roberto, diventa ansiosa.	diventa ansiosa.	46.569616709656934	5
+Quando Maria cerca Roberto, diventa ansioso.	Quando Maria cerca Roberto, diventa ansioso.	diventa ansioso.	45.53568295250036	5
+Quando Maria lo cerca, diventa ansioso.	Quando Maria lo cerca, diventa ansioso.	diventa ansioso.	47.89605209930431	5
+Quando i Rossi lo cercano, diventa ansioso.	Quando i Rossi lo cercano, diventa ansioso.	diventa ansioso.	42.90122754864346	5
+Dopo che Paola ha telefonato a Piero, è andata al bar.	Dopo che Paola ha telefonato a Piero, è andata al bar.	è andata al bar.	32.66569432064225	6
+Dopo che Paola ha telefonato a Piero, è andato al bar.	Dopo che Paola ha telefonato a Piero, è andato al bar.	è andato al bar.	35.02294251807197	6
+Dopo che Paola gli ha telefonato, è andato al bar.	Dopo che Paola gli ha telefonato, è andato al bar.	è andato al bar.	32.995490674208256	6
+Dopo che i Neri gli hanno telefonato, è andato al bar.	Dopo che i Neri gli hanno telefonato, è andato al bar.	è andato al bar.	32.37158535536316	6
+Dopo che Marina ha salutato Enrico, è salita sul treno.	Dopo che Marina ha salutato Enrico, è salita sul treno.	è salita sul treno.	42.83290754377997	6
+Dopo che Marina ha salutato Enrico, è salito sul treno.	Dopo che Marina ha salutato Enrico, è salito sul treno.	è salito sul treno.	55.535582573169606	7
+Dopo che Marina lo ha salutato, è salito sul treno.	Dopo che Marina lo ha salutato, è salito sul treno.	è salito sul treno.	48.805914275847584	7
+Dopo che i Giorgi lo hanno salutato, è salito sul treno.	Dopo che i Giorgi lo hanno salutato, è salito sul treno.	è salito sul treno.	47.56159027814417	7
+Da quando Franca frequenta Sandro, è diventata arrogante.	Da quando Franca frequenta Sandro, è diventata arrogante.	è diventata arrogante.	47.176866356134376	6
+Da quando Franca frequenta Sandro, è diventato arrogante.	Da quando Franca frequenta Sandro, è diventato arrogante.	è diventato arrogante.	45.71625175352575	6
+Da quando Franca lo frequenta, è diventato arrogante.	Da quando Franca lo frequenta, è diventato arrogante.	è diventato arrogante.	43.80554751570149	6
+Da quando i Rossi lo frequentano, è diventato arrogante.	Da quando i Rossi lo frequentano, è diventato arrogante.	è diventato arrogante.	39.35500137360919	6
+Dopo che Irene ha parlato con Vito, si è sentita sollevata.	Dopo che Irene ha parlato con Vito, si è sentita sollevata.	si è sentita sollevata.	48.08565812133301	8
+Dopo che Irene ha parlato con Vito, si è sentito sollevato.	Dopo che Irene ha parlato con Vito, si è sentito sollevato.	si è sentito sollevato.	51.70180971788175	8
+Dopo che Irene gli ha parlato, si è sentito sollevato.	Dopo che Irene gli ha parlato, si è sentito sollevato.	si è sentito sollevato.	49.91198896280384	8
+Dopo che i Rinaldi gli hanno parlato, si è sentito sollevato.	Dopo che i Rinaldi gli hanno parlato, si è sentito sollevato.	si è sentito sollevato.	50.08373777560331	8
+Quando Stefania ha licenziato Angelo, era molto arrabbiata.	Quando Stefania ha licenziato Angelo, era molto arrabbiata.	era molto arrabbiata.	53.01840423917376	6
+Quando Stefania ha licenziato Angelo, era molto arrabbiato.	Quando Stefania ha licenziato Angelo, era molto arrabbiato.	era molto arrabbiato.	55.951035920255535	6
+Quando Stefania lo ha licenziato, era molto arrabbiato.	Quando Stefania lo ha licenziato, era molto arrabbiato.	era molto arrabbiato.	49.407333731551674	6
+Quando i Brambilla lo hanno licenziato, era molto arrabbiato.	Quando i Brambilla lo hanno licenziato, era molto arrabbiato.	era molto arrabbiato.	44.86527186701356	6
+Mentre Luisa raccontava l'incidente a Teo, era pallida in viso.	Mentre Luisa raccontava l'incidente a Teo, era pallida in viso.	era pallida in viso.	56.46791544627312	6
+Mentre Luisa raccontava l'incidente a Teo, era pallido in viso.	Mentre Luisa raccontava l'incidente a Teo, era pallido in viso.	era pallido in viso.	58.410071441282064	6
+Mentre Luisa gli raccontava l'incidente, era pallido in viso.	Mentre Luisa gli raccontava l'incidente, era pallido in viso.	era pallido in viso.	57.61089111432819	6
+Mentre i DeVito gli raccontavano l'incidente, era pallido in viso.	Mentre i DeVito gli raccontavano l'incidente, era pallido in viso.	era pallido in viso.	58.66396725064207	6
+Quando Katia ha fatto quel regalo a Piero, non era ancora sposata.	Quando Katia ha fatto quel regalo a Piero, non era ancora sposata.	non era ancora sposata.	38.942642368362996	6
+Quando Katia ha fatto quel regalo a Piero, non era ancora sposato.	Quando Katia ha fatto quel regalo a Piero, non era ancora sposato.	non era ancora sposato.	43.460791387333444	6
+Quando Katia gli ha fatto quel regalo, non era ancora sposato.	Quando Katia gli ha fatto quel regalo, non era ancora sposato.	non era ancora sposato.	46.2817747826648	6
+Quando i Bonino gli hanno fatto quel regalo, non era ancora sposato.	Quando i Bonino gli hanno fatto quel regalo, non era ancora sposato.	non era ancora sposato.	34.1011749758094	6
+Quando Claudia ha conosciuto Lino, era già famosa.	Quando Claudia ha conosciuto Lino, era già famosa.	era già famosa.	28.66986030541833	4
+Quando Claudia ha conosciuto Lino, era già famoso.	Quando Claudia ha conosciuto Lino, era già famoso.	era già famoso.	31.762581591873797	4
+Quando Claudia lo ha conosciuto, era già famoso.	Quando Claudia lo ha conosciuto, era già famoso.	era già famoso.	29.955211782085026	4
+Quando i Belli lo hanno conosciuto, era già famoso.	Quando i Belli lo hanno conosciuto, era già famoso.	era già famoso.	23.67377631049	4
+Quando Lucia ha rintracciato Marco, è rimasta sorpresa.	Quando Lucia ha rintracciato Marco, è rimasta sorpresa.	è rimasta sorpresa.	31.68751630862145	5
+Quando Lucia ha rintracciato Marco, è rimasto sorpreso.	Quando Lucia ha rintracciato Marco, è rimasto sorpreso.	è rimasto sorpreso.	33.211051004780884	5
+Quando Lucia lo ha rintracciato, è rimasto sorpreso.	Quando Lucia lo ha rintracciato, è rimasto sorpreso.	è rimasto sorpreso.	32.51021929570209	5
+Quando i Burani lo hanno rintracciato, è rimasto sorpreso.	Quando i Burani lo hanno rintracciato, è rimasto sorpreso.	è rimasto sorpreso.	35.95260853901039	5
+Quella sera che Gianna ha lasciato Marco a casa, era scocciata.	Quella sera che Gianna ha lasciato Marco a casa, era scocciata.	era scocciata.	40.310372601998694	5
+Quella sera che Gianna ha lasciato Marco a casa, era scocciato.	Quella sera che Gianna ha lasciato Marco a casa, era scocciato.	era scocciato.	39.95795924515045	5
+Quella sera che Gianna lo ha lasciato a casa, era scocciato.	Quella sera che Gianna lo ha lasciato a casa, era scocciato.	era scocciato.	39.72858354673353	5
+Quella sera che i Moro lo hanno lasciato a casa, era scocciato.	Quella sera che i Moro lo hanno lasciato a casa, era scocciato.	era scocciato.	39.42622338475105	5
+Da quando Rosa ha mandato via Ennio di casa, è diventata strana.	Da quando Rosa ha mandato via Ennio di casa, è diventata strana.	è diventata strana.	34.15113183125595	5
+Da quando Rosa ha mandato via Ennio di casa, è diventato strano.	Da quando Rosa ha mandato via Ennio di casa, è diventato strano.	è diventato strano.	36.830377557122695	6
+Da quando Rosa lo ha mandato via di casa, è diventato strano.	Da quando Rosa lo ha mandato via di casa, è diventato strano.	è diventato strano.	34.23458360986503	6
+Da quando i Rossi lo hanno mandato via di casa, è diventato strano.	Da quando i Rossi lo hanno mandato via di casa, è diventato strano.	è diventato strano.	33.927258933353905	6
+Quando Piero ha insultato Chiara, era ubriaco.	Quando Piero ha insultato Chiara, era ubriaco.	era ubriaco.	66.38189505813976	6
+Quando Piero ha insultato Chiara, era ubriaca.	Quando Piero ha insultato Chiara, era ubriaca.	era ubriaca.	50.01970982382399	5
+Quando Piero l'ha insultata, era ubriaca.	Quando Piero l'ha insultata, era ubriaca.	era ubriaca.	48.09493008205236	5
+Quando i Bianchi l'hanno insultata, era ubriaca.	Quando i Bianchi l'hanno insultata, era ubriaca.	era ubriaca.	44.791128875946875	5
+Prima che Flavio conoscesse Donata, era piuttosto grasso.	Prima che Flavio conoscesse Donata, era piuttosto grasso.	era piuttosto grasso.	40.96172626230711	5
+Prima che Flavio conoscesse Donata, era piuttosto grassa.	Prima che Flavio conoscesse Donata, era piuttosto grassa.	era piuttosto grassa.	44.63609342768466	5
+Prima che Flavio la conoscesse, era piuttosto grassa.	Prima che Flavio la conoscesse, era piuttosto grassa.	era piuttosto grassa.	40.39597825645851	5
+Prima che i Rossi la conoscessero, era piuttosto grassa.	Prima che i Rossi la conoscessero, era piuttosto grassa.	era piuttosto grassa.	41.292477473324944	5
+Da quando Gianni ha assunto Rosa come segretaria, è diventato pigro.	Da quando Gianni ha assunto Rosa come segretaria, è diventato pigro.	è diventato pigro.	50.61945020655015	6
+Da quando Gianni ha assunto Rosa come segretaria, è diventata pigra.	Da quando Gianni ha assunto Rosa come segretaria, è diventata pigra.	è diventata pigra.	43.589700418836244	6
+Da quando Gianni l'ha assunta come segretaria, è diventata pigra.	Da quando Gianni l'ha assunta come segretaria, è diventata pigra.	è diventata pigra.	38.552217072684314	6
+Da quando i Manzoni l'hanno assunta come segretaria, è diventata pigra.	Da quando i Manzoni l'hanno assunta come segretaria, è diventata pigra.	è diventata pigra.	39.30249837670274	6
+Quando Pietro ha baciato Angela, sembrava un po' impacciato.	Quando Pietro ha baciato Angela, sembrava un po' impacciato.	sembrava un po' impacciato.	67.26430438436545	9
+Quando Pietro ha baciato Angela, sembrava un po' impacciata.	Quando Pietro ha baciato Angela, sembrava un po' impacciata.	sembrava un po' impacciata.	68.20621311185468	9
+Quando Pietro l'ha baciata, sembrava un po' impacciata.	Quando Pietro l'ha baciata, sembrava un po' impacciata.	sembrava un po' impacciata.	61.38922016145466	9
+Quando i Rossi l'hanno baciata, sembrava un po' impacciata.	Quando i Rossi l'hanno baciata, sembrava un po' impacciata.	sembrava un po' impacciata.	60.8292722257927	9
+Il giorno che Ettore ha presentato Giovanna agli amici, era nervoso.	Il giorno che Ettore ha presentato Giovanna agli amici, era nervoso.	era nervoso.	29.560235175853588	4
+Il giorno che Ettore ha presentato Giovanna agli amici, era nervosa.	Il giorno che Ettore ha presentato Giovanna agli amici, era nervosa.	era nervosa.	31.412637930760603	4
+Il giorno che Ettore l'ha presentata agli amici, era nervosa.	Il giorno che Ettore l'ha presentata agli amici, era nervosa.	era nervosa.	30.043809245469824	4
+Il giorno che i Minelli l'hanno presentata agli amici, era nervosa.	Il giorno che i Minelli l'hanno presentata agli amici, era nervosa.	era nervosa.	30.7416808069043	4
+Quando Lorenzo ha chiamato Daniela, era contento.	Quando Lorenzo ha chiamato Daniela, era contento.	era contento.	25.701801936108506	4
+Quando Lorenzo ha chiamato Daniela, era contenta.	Quando Lorenzo ha chiamato Daniela, era contenta.	era contenta.	28.01772857412204	4
+Quando Lorenzo l'ha chiamata, era contenta.	Quando Lorenzo l'ha chiamata, era contenta.	era contenta.	26.78991070778328	4
+Quando i Lombardi l'hanno chiamata, era contenta.	Quando i Lombardi l'hanno chiamata, era contenta.	era contenta.	25.975910120852696	4
+Quando Ugo ha dato il benvenuto ad Anna, sembrava preoccupato.	Quando Ugo ha dato il benvenuto ad Anna, sembrava preoccupato.	sembrava preoccupato.	38.222652314710665	5
+Quando Ugo ha dato il benvenuto ad Anna, sembrava preoccupata.	Quando Ugo ha dato il benvenuto ad Anna, sembrava preoccupata.	sembrava preoccupata.	39.26929721019554	5
+Quando Ugo le ha dato il benvenuto, sembrava preoccupata.	Quando Ugo le ha dato il benvenuto, sembrava preoccupata.	sembrava preoccupata.	35.87778314345416	5
+Quando i Volpi le hanno dato il benvenuto, sembrava preoccupata.	Quando i Volpi le hanno dato il benvenuto, sembrava preoccupata.	sembrava preoccupata.	35.18065694630404	5
+Mentre Carlo descriveva il miracolo a Rosa, era estatico.	Mentre Carlo descriveva il miracolo a Rosa, era estatico.	era estatico.	39.74234297814225	4
+Mentre Carlo descriveva il miracolo a Rosa, era estatica.	Mentre Carlo descriveva il miracolo a Rosa, era estatica.	era estatica.	39.83974554411719	4
+Mentre Carlo le descriveva il miracolo, era estatica.	Mentre Carlo le descriveva il miracolo, era estatica.	era estatica.	40.814778925511774	4
+Mentre i Franchi le descrivevano il miracolo, era estatica.	Mentre i Franchi le descrivevano il miracolo, era estatica.	era estatica.	40.427986100133424	4
+Dopo che Nino ha incontrato Irma al bar, è tornato a casa.	Dopo che Nino ha incontrato Irma al bar, è tornato a casa.	è tornato a casa.	21.53777810346308	6
+Dopo che Nino ha incontrato Irma al bar, è tornata a casa.	Dopo che Nino ha incontrato Irma al bar, è tornata a casa.	è tornata a casa.	24.03773879429637	6
+Dopo che Nino l'ha incontrata al bar, è tornata a casa.	Dopo che Nino l'ha incontrata al bar, è tornata a casa.	è tornata a casa.	22.615525391102302	6
+Dopo che i Dolci l'hanno incontrata al bar, è tornata a casa.	Dopo che i Dolci l'hanno incontrata al bar, è tornata a casa.	è tornata a casa.	23.046590020876483	6
+Dopo che Antonio ha invitato Lucia, si è ammalato.	Dopo che Antonio ha invitato Lucia, si è ammalato.	si è ammalato.	31.124587229116862	5
+Dopo che Antonio ha invitato Lucia, si è ammalata.	Dopo che Antonio ha invitato Lucia, si è ammalata.	si è ammalata.	32.685381826011024	5
+Dopo che Antonio l'ha invitata, si è ammalata.	Dopo che Antonio l'ha invitata, si è ammalata.	si è ammalata.	28.551288008246534	5
+Dopo che i Bonomi l'hanno invitata, si è ammalata.	Dopo che i Bonomi l'hanno invitata, si è ammalata.	si è ammalata.	30.8606162588406	5
+Quando Fulvio ha minacciato Carla, era tutto agitato.	Quando Fulvio ha minacciato Carla, era tutto agitato.	era tutto agitato.	43.982684495656066	5
+Quando Fulvio ha minacciato Carla, era tutta agitata.	Quando Fulvio ha minacciato Carla, era tutta agitata.	era tutta agitata.	42.62206772046127	5
+Quando Fulvio l'ha minacciata, era tutta agitata.	Quando Fulvio l'ha minacciata, era tutta agitata.	era tutta agitata.	39.32710273789695	5
+Quando i Rizzi l'hanno minacciata, era tutta agitata.	Quando i Rizzi l'hanno minacciata, era tutta agitata.	era tutta agitata.	38.56559939224168	5
+Quando Guido ha parlato con Ina, era depresso.	Quando Guido ha parlato con Ina, era depresso.	era depresso.	33.67509943442243	5
+Quando Guido ha parlato con Ina, era depressa.	Quando Guido ha parlato con Ina, era depressa.	era depressa.	35.89214239288897	5
+Quando Guido le ha parlato, era depressa.	Quando Guido le ha parlato, era depressa.	era depressa.	33.24105926993059	5
+Quando i Ricci le hanno parlato, era depressa.	Quando i Ricci le hanno parlato, era depressa.	era depressa.	33.59034860626908	5
+Dopo che Piero ha telefonato ai vigili del fuoco, sono venuti immediatamente.	Dopo che Piero ha telefonato ai vigili del fuoco, sono venuti immediatamente.	sono venuti immediatamente.	29.42760739808961	5
+Dopo che ho telefonato ai vigili del fuoco, sono venuti immediatamente.	Dopo che ho telefonato ai vigili del fuoco, sono venuti immediatamente.	sono venuti immediatamente.	27.341048892703743	5
+Quando Gianni ha salutato i nonni, sembravano veramente tristi.	Quando Gianni ha salutato i nonni, sembravano veramente tristi.	sembravano veramente tristi.	47.97599456827951	6
+Quando ho salutato i nonni, sembravano veramente tristi.	Quando ho salutato i nonni, sembravano veramente tristi.	sembravano veramente tristi.	49.09397834725099	6
+Dopo che Maria ha litigato con i suoceri, non telefonano più.	Dopo che Maria ha litigato con i suoceri, non telefonano più.	non telefonano più.	31.32312120476842	5
+Dopo che ho litigato con i suoceri, non telefonano più.	Dopo che ho litigato con i suoceri, non telefonano più.	non telefonano più.	29.909884240520118	5
+Dopo che Ettore ha ringraziato gli ospiti, se ne sono andati.	Dopo che Ettore ha ringraziato gli ospiti, se ne sono andati.	se ne sono andati.	30.663538646490515	6
+Dopo che ho ringraziato gli ospiti, se ne sono andati.	Dopo che ho ringraziato gli ospiti, se ne sono andati.	se ne sono andati.	25.663566653064272	6
+Quando Daniela è andata ad abitare con i nonni, erano felicissimi.	Quando Daniela è andata ad abitare con i nonni, erano felicissimi.	erano felicissimi.	38.57517008934851	5
+Quando sono andato ad abitare con i nonni, erano felicissimi.	Quando sono andato ad abitare con i nonni, erano felicissimi.	erano felicissimi.	40.597036425815034	5
+Da quando Adriana ha conosciuto quei ragazzi, non la lasciano in pace.	Da quando Adriana ha conosciuto quei ragazzi, non la lasciano in pace.	non la lasciano in pace.	38.745675439922714	7
+Da quando ho conosciuto quei ragazzi, non mi lasciano in pace.	Da quando ho conosciuto quei ragazzi, non mi lasciano in pace.	non mi lasciano in pace.	37.466699115743175	7
+Quando Claudia ha contattato le zie dell'America, sono rimaste sorprese.	Quando Claudia ha contattato le zie dell'America, sono rimaste sorprese.	sono rimaste sorprese.	43.16486851186661	7
+Quando ho contattato le zie dell'America, sono rimaste sorprese.	Quando ho contattato le zie dell'America, sono rimaste sorprese.	sono rimaste sorprese.	43.651275553935186	7
+Mentre Carlo descriveva il miracolo ai fedeli, erano in estasi.	Mentre Carlo descriveva il miracolo ai fedeli, erano in estasi.	erano in estasi.	41.33758662702718	5
+Mentre descrivevo il miracolo ai fedeli, erano in estasi.	Mentre descrivevo il miracolo ai fedeli, erano in estasi.	erano in estasi.	41.62727008228815	5
+Quando Silvia ha portato in vacanza i cugini, si sono annoiati.	Quando Silvia ha portato in vacanza i cugini, si sono annoiati.	si sono annoiati.	33.47646748306388	6
+Quando ho portato in vacanza i cugini, si sono annoiati.	Quando ho portato in vacanza i cugini, si sono annoiati.	si sono annoiati.	29.208832265426633	6
+Dopo che Stefania ha rimproverato i bambini, hanno chiesto scusa.	Dopo che Stefania ha rimproverato i bambini, hanno chiesto scusa.	hanno chiesto scusa.	27.15809558898764	5
+Dopo che hai rimproverato i bambini, hanno chiesto scusa.	Dopo che hai rimproverato i bambini, hanno chiesto scusa.	hanno chiesto scusa.	32.01570981413797	5
+Quando Giuseppe ha insultato gli amici, erano ubriachi.	Quando Giuseppe ha insultato gli amici, erano ubriachi.	erano ubriachi.	41.02122694793292	6
+Quando hai insultato gli amici, erano ubriachi.	Quando hai insultato gli amici, erano ubriachi.	erano ubriachi.	50.348324753570964	6
+Dopo che Marina ha salutato le amiche, sono salite in macchina.	Dopo che Marina ha salutato le amiche, sono salite in macchina.	sono salite in macchina.	35.05877552034745	6
+Dopo che hai salutato le amiche, sono salite in macchina.	Dopo che hai salutato le amiche, sono salite in macchina.	sono salite in macchina.	39.67298332748281	6
+Quando Luciano ha premiato i vincitori, hanno ringraziato gli organizzatori.	Quando Luciano ha premiato i vincitori, hanno ringraziato gli organizzatori.	hanno ringraziato gli organizzatori.	46.979640800163125	7
+Quando hai premiato i vincitori, hanno ringraziato gli organizzatori.	Quando hai premiato i vincitori, hanno ringraziato gli organizzatori.	hanno ringraziato gli organizzatori.	57.314629442247096	7
+Dopo che Lina ha chiesto scusa ai colleghi, si sono calmati.	Dopo che Lina ha chiesto scusa ai colleghi, si sono calmati.	si sono calmati.	27.014400307301877	5
+Dopo che hai chiesto scusa ai colleghi, si sono calmati.	Dopo che hai chiesto scusa ai colleghi, si sono calmati.	si sono calmati.	31.38799906297454	5
+Quando Luisa ha accusato i professori, hanno reagito immediatamente.	Quando Luisa ha accusato i professori, hanno reagito immediatamente.	hanno reagito immediatamente.	36.75876869596511	5
+Quando hai accusato i professori, hanno reagito immediatamente.	Quando hai accusato i professori, hanno reagito immediatamente.	hanno reagito immediatamente.	48.75501528462166	5
+Quando Luigi ha intervistato i candidati, hanno fatto tutti la stessa domanda.	Quando Luigi ha intervistato i candidati, hanno fatto tutti la stessa domanda.	hanno fatto tutti la stessa domanda.	42.626608243805215	7
+Quando hai intervistato i candidati, hanno fatto tutti la stessa domanda.	Quando hai intervistato i candidati, hanno fatto tutti la stessa domanda.	hanno fatto tutti la stessa domanda.	52.91252783232897	7
+Dopo che Antonio ha mandato a chiamare i testimoni, sono diventati irreperibili.	Dopo che Antonio ha mandato a chiamare i testimoni, sono diventati irreperibili.	sono diventati irreperibili.	57.50292368148678	7
+Dopo che hai mandato a chiamare i testimoni, sono diventati irreperibili.	Dopo che hai mandato a chiamare i testimoni, sono diventati irreperibili.	sono diventati irreperibili.	60.37353581849811	7
+Quando Gianni ha annunciato i vincitori, sono saliti sul palcoscenico.	Quando Gianni ha annunciato i vincitori, sono saliti sul palcoscenico.	sono saliti sul palcoscenico.	69.5994778641155	8
+Quando hai annunciato i vincitori, sono saliti sul palcoscenico.	Quando hai annunciato i vincitori, sono saliti sul palcoscenico.	sono saliti sul palcoscenico.	74.86089370647291	8

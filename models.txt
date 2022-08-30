@@ -1,0 +1,12 @@
+LorenzoDeMattei/GePpeTto
+GroNLP/gpt2-small-italian
+Musixmatch/umberto-commoncrawl-cased-v1
+dbmdz/bert-base-italian-cased
+dbmdz/bert-base-italian-xxl-cased
+bert-base-multilingual-cased
+xlm-mlm-100-1280
+xlm-roberta-base
+xlm-roberta-large
+facebook/xglm-2.9B
+facebook/xglm-4.5B
+facebook/xglm-7.5B
