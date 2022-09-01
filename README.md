@@ -23,7 +23,7 @@ The results of the study were analyzed using R. `StatisticalAnalysis.Rmd` runs a
 
 
 ## How to cite
-This will be updated. The final version of the paper can be found [here](https://jmichaelov.com/files/MichaelovBergen.2022.coling.pdf).
+This will be updated. The final version of the paper can be found [here](https://arxiv.org/abs/2208.14554).
 
 ## References
 
