@@ -1,6 +1,8 @@
 # Do language models make human-like predictions about the coreferents of Italian anaphoric zero pronouns?
 
-This repository includes all the files required to replicate the paper "Do language models make human-like predictions about the coreferents of Italian anaphoric zero pronouns?", accepted at COLING 2022.
+This repository includes all the files required to replicate the paper ["Do language models make human-like predictions about the coreferents of Italian anaphoric zero pronouns?"](https://arxiv.org/abs/2208.14554), accepted at COLING 2022.
+
+If you're here because you want to use the code from the paper, the [PsychFormers](https://github.com/jmichaelov/PsychFormers) repository contains an updated version of the code.
 
 Paper abstract:
 > Some languages allow arguments to be omitted in certain contexts. Yet human language comprehenders reliably infer the intended referents of these *zero* pronouns, in part because they construct expectations which referents are more likely. We ask whether Neural Language Models also extract the same expectations. We test whether 12 contemporary language models display expectations that reflect human behavior when exposed to sentences with zero pronouns from five behavioral experiments conducted in Italian by Carminati (2005). We find that at least three models capture human behavior from each experiment, with three&mdash;XGLM 2.9B, 4.5B, and 7.5B&mdash;successfully modeling human behavior from all the experiments. This result suggests that human expectations about coreference can be derived from exposure to language, and also indicates features of language models that allow them to better reflect human behavior.
@@ -23,7 +25,16 @@ The results of the study were analyzed using R. `StatisticalAnalysis.Rmd` runs a
 
 
 ## How to cite
-This will be updated. The final version of the paper can be found [here](https://arxiv.org/abs/2208.14554).
+Please cite the paper if you use this code:
+
+```
+@article{michaelov_2022_AnaphoricZeroPronouns,
+  title={Do language models make human-like predictions about the coreferents of Italian anaphoric zero pronouns?},
+  author={Michaelov, James A. and Bergen, Benjamin K.},
+  journal={arXiv preprint arXiv:2208.14554},
+  year={2022}
+}
+```
 
 ## References
 
